@@ -1,0 +1,115 @@
+<launch>
+    <arg name="launch_mavros" default="false"/>
+    <arg name="controller" default="mpc" />
+    <arg name="is_simulation" default="false" />
+    <arg name="publish_trajectory" default="false"/>
+    <arg name="takeoff_height" default="0.4" />
+
+    <group if="$(arg launch_mavros)">
+
+        <include file="$(find mavros)/launch/node.launch">
+            <arg name="pluginlists_yaml" value="$(find mavros)/launch/px4_pluginlists.yaml" />
+            <arg name="config_yaml" value="$(find mavros)/launch/px4_config.yaml" />
+            <arg name="fcu_url" value="udp://:14540@127.0.0.1:14557" />
+            <arg name="gcs_url" value="" />
+            <arg name="tgt_system" value="1" />
+            <arg name="tgt_component" value="1" />
+            <arg name="fcu_protocol" value="v2.0" />
+        </include>
+    </group>
+
+    <!-- launch a controller -->
+    <!-- <group if="$(arg is_simulation)">
+    </group>
+    <group unless="$(arg is_simulation)">
+    </group> -->
+
+    <!-- if only simulation -->
+    <group if="$(arg is_simulation)">
+        <arg name="robot_loc_pose" default="/robot_pose" />
+        <!-- <node name="si_controller" pkg="itm_nonlinear_mpc" type="si_controller" respawn="false" clear_params="true" output="screen" >
+            <remap from="/real_pose" to="$(arg robot_loc_pose)" />
+            <param name="sim_only" value="$(arg is_simulation)"/>
+            <param name="takeoff_height" value="$(arg takeoff_height)" />
+        </node> -->
+        <node name="pid_controller" pkg="itm_nonlinear_mpc" type="pid_controller" respawn="false" clear_params="true" output="screen" >
+            <remap from="/real_pose" to="$(arg robot_loc_pose)" />
+            <param name="sim_only" value="$(arg is_simulation)"/>
+            <param name="takeoff_height" value="$(arg takeoff_height)" />
+        </node>
+        <!-- <node name="mpc_controller" pkg="itm_nonlinear_mpc" type="mpc_controller" respawn="false" clear_params="true" output="screen" >
+            <remap from="/real_pose" to="$(arg robot_loc_pose)" />
+            <param name="sim_only" value="$(arg is_simulation)"/>
+            <param name="takeoff_height" value="$(arg takeoff_height)" />
+            <param name="control_offset" value="0.59" />
+        </node> -->
+        <!-- <node name="mpc_controller" pkg="itm_nonlinear_mpc" type="mpc_q_controller" respawn="false" clear_params="true" output="screen" >
+            <remap from="/real_pose" to="$(arg robot_loc_pose)" />
+            <param name="sim_only" value="$(arg is_simulation)"/>
+            <param name="takeoff_height" value="$(arg takeoff_height)" />
+            <param name="control_offset" value="0.59" />
+        </node> -->
+        <!-- .58 -->
+    </group>
+
+    <!-- hardware experiment -->
+    <group unless="$(arg is_simulation)">
+        <!-- <arg name="robot_loc_pose" default="/vrpn_client_node/ITM_Q300/pose" /> -->
+        <arg name="robot_loc_pose" default="/vrpn_client_node/ITM_Q300/pose" />
+        <!-- <node name="pid_controller" pkg="itm_nonlinear_mpc" type="pid_controller" respawn="false" clear_params="true" output="screen" >
+            <remap from="/real_pose" to="$(arg robot_loc_pose)" />
+            <param name="sim_only" value="$(arg is_simulation)"/>
+            <param name="takeoff_height" value="$(arg takeoff_height)" />
+        </node> -->
+        <node name="mpc_controller" pkg="itm_nonlinear_mpc" type="mpc_controller" respawn="false" clear_params="true" output="screen" >
+            <remap from="/real_pose" to="$(arg robot_loc_pose)" />
+            <param name="sim_only" value="$(arg is_simulation)"/>
+            <param name="takeoff_height" value="$(arg takeoff_height)" />
+            <param name="control_offset" value="0.38" />
+        </node>
+        <!-- <node name="mpc_controller" pkg="itm_nonlinear_mpc" type="mpc_q_controller" respawn="false" clear_params="true" output="screen" >
+            <remap from="/real_pose" to="$(arg robot_loc_pose)" />
+            <param name="sim_only" value="$(arg is_simulation)"/>
+            <param name="takeoff_height" value="$(arg takeoff_height)" />
+            <param name="control_offset" value="0.37" />
+        </node> -->
+    </group>
+
+    <group if="$(arg publish_trajectory)">
+        <node name="trajectory_publisher" pkg="itm_nonlinear_mpc" type="marker_node" output="screen">
+            <param name="sim_only" value="$(arg is_simulation)" />
+            <param name="num_path" value="20" />
+            <param name="publish_path" value="true" />
+            <param name="publish_markers" value="true" />
+            <remap from="/uav_odom" to="/robot_pose" />
+            <remap from="/uav_pose" to="/vrpn_client_node/ITM_Q300/pose" />
+            <remap from="/desired_trajectory" to="/robot_trajectory" />
+        </node>
+    </group>
+
+    <!-- lanch an offboard_node -->
+    <arg name="node_start_delay1" default="1.0" />
+    <group if="$(arg is_simulation)">
+        <arg name="robot_loc_pose" default="/robot_pose" />
+        <node name="offboard_node" pkg="itm_nonlinear_mpc" type="px4_controller" respawn="false" clear_params="true" output="screen" launch-prefix="zsh -c 'sleep $(arg node_start_delay1); $0 $@'">
+            <remap from="/real_pose" to="$(arg robot_loc_pose)" />
+            <!-- <remap from="/real_pose" to="/robot_pose" /> -->
+            <param name="controller" value="$(arg controller)"/>
+            <param name="sim_only" value="$(arg is_simulation)" />
+            <!--x_min, x_max, y_min, y_max, z_max-->
+            <rosparam param="fence_def">[-1.0, 1.0, -1.0, 1.0, 2.2]</rosparam>
+        </node>
+    </group>
+    <group unless="$(arg is_simulation)">
+        <arg name="robot_loc_pose" default="/vrpn_client_node/ITM_Q300/pose" />
+        <node name="offboard_node" pkg="itm_nonlinear_mpc" type="px4_controller" respawn="false" clear_params="true" output="screen" launch-prefix="zsh -c 'sleep $(arg node_start_delay1); $0 $@'">
+            <remap from="/real_pose" to="$(arg robot_loc_pose)" />
+            <param name="controller" value="$(arg controller)"/>
+            <param name="sim_only" value="$(arg is_simulation)" />
+            <!--x_min, x_max, y_min, y_max, z_max-->
+            <!-- <rosparam param="fence_def">[-1.0, 1.5, -1.2, 1.6, 1.2]</rosparam> -->
+            <rosparam param="fence_def">[-0.7, 0.8, -0.8, 0.8, 0.7]</rosparam>
+        </node>
+    </group>
+
+</launch>

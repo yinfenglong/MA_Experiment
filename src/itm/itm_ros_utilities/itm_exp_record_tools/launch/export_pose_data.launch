@@ -1,0 +1,6 @@
+<launch>
+    <node name="export_pose_npy" type="export_posestamped_npy.py" pkg="itm_exp_record_tools" output="screen">
+        <param name="topic_name" value="/vrpn_client_node/ITM_Q300/pose"/>
+        <param name="sample_rate" value="100" />
+    </node>
+</launch>

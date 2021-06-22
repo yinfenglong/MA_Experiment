@@ -1,0 +1,1 @@
+/usr/bin/c++  -std=c++11 -g  -rdynamic CMakeFiles/../solver/nmpc_quadrotor_solver_withexternalforce.dir/nmpc_quadrotor_acado_withexternalforce.cpp.o  -o ../solver/nmpc_quadrotor_solver_withexternalforce -Wl,-rpath,/media/psf/Home/Develop/ACADOtoolkit/build_linux/lib /media/psf/Home/Develop/ACADOtoolkit/build_linux/lib/libacado_toolkit_s.so 

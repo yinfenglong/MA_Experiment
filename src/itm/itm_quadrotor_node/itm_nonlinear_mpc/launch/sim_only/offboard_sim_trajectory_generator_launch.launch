@@ -1,0 +1,8 @@
+<launch>
+    <arg name="horizon" default="20"/>
+    <arg name="traj_type_idx" default="0"/>
+    <node pkg="itm_nonlinear_mpc"  name="offboard_sim_trajectory_gen" type="offboard_sim_trajectory_planner.py" respawn="false" output="screen">
+        <param name="time_horizon" value="$(arg horizon)" />
+        <param name="trajectory_type_index" value="$(arg traj_type_idx)" />
+    </node>
+</launch>

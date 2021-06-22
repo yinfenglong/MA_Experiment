@@ -1,0 +1,19 @@
+<launch>
+  <arg name="node_start_delay2" default="0.0" />
+    <!-- <node name="itm_pid_offboard" pkg="itm_nonlinear_mpc" type="itm_pid_offboard_node" respawn="false" clear_params="true" output="screen">
+    </node> -->
+     <node name="itm_pid_offboard" pkg="itm_nonlinear_mpc" type="itm_pid_offboard_node" respawn="false" clear_params="true" output="screen">
+    </node>
+
+    <!-- rosbag recoder -->
+    <!-- <node name="recoder1" pkg="rosbag" type="record" output="screen" args="record -o /data/YanLI/Yan_ROS_ws/rosbag/trajectory_without_wind/trajectory_o/pid_to /robot_pose"  launch-prefix="zsh -c 'sleep $(arg node_start_delay2); $0 $@'">
+    </node> -->
+    <!-- <node name="recoder1" pkg="rosbag" type="record" output="screen" args="record -o /data/YanLI/Yan_ROS_ws/rosbag/trajectory_with_wind/trajectory_z/pid_to_w /robot_pose"  launch-prefix="zsh -c 'sleep $(arg node_start_delay2); $0 $@'">
+    </node> -->
+     <!-- <node name="recoder2" pkg="rosbag" type="record" output="screen" args="record -o  /data/YanLI/Yan_ROS_ws/rosbag/trajectory_without_wind/trajectory_o/pid_ref_to_w /itm_quadrotor_control/set_point_pos"  launch-prefix="zsh -c 'sleep $(arg node_start_delay2); $0 $@'">
+    </node> -->
+
+    <!-- <node name="recoder2" pkg="rosbag" type="record" output="screen" args="record -o  /data/YanLI/Yan_ROS_ws/rosbag/trajectory_with_wind/trajectory_z/pid_ref_to_w /itm_quadrotor_control/set_point_pos"  launch-prefix="zsh -c 'sleep $(arg node_start_delay2); $0 $@'">
+    </node> -->
+
+</launch>

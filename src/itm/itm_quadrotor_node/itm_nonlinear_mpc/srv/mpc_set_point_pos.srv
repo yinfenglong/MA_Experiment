@@ -1,0 +1,8 @@
+float32 x
+float32 y
+float32 z
+string frame_id
+bool auto_arm
+---
+bool success
+string message
