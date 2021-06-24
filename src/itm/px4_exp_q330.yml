@@ -1,7 +1,7 @@
 # ./.tmuxinator.yml
 
 name: px4_exp_q330
-root: ~/Develop/ROS_ws/ITM_ws
+root: /home/itm_stud/test_ma_ws/MA_Experiment
 
 # Optional tmux socket
 # socket_name: foo
@@ -49,7 +49,7 @@ windows:
       layout: main-vertical
       panes:
         - opti_track:
-          - source ros.sh
+          - source ros.zsh
           - roslaunch vrpn_client_ros sample.launch server:=192.168.1.111
   - onboard_computer:
       layout: main-vertical
@@ -63,18 +63,23 @@ windows:
       layout: main-vertical
       panes:
         - offboard_controller:
-          - source ros.sh
+          - source ros.zsh
+        - offboard:
+          - source ros.zsh
         - take_off:
-          - source ros.sh
+          - source ros.zsh
         - landing:
-          - source ros.sh
+          - source ros.zsh
   - additional_tools:
       layout: main-vertical
       panes:
         - rosbag:
-          - source ros.sh
+          - source ros.zsh
+        - magnet:
+          - source ros.zsh
         - trajectory_for_UAV:
-          - source ros.sh
+          - source ros.zsh
         - trajectory_command:
-          - source ros.sh
+          - source ros.zsh
+
 
