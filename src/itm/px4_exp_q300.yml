@@ -1,6 +1,6 @@
 # ./.tmuxinator.yml
 
-name: sitl_gazebo
+name: px4_exp_q300
 root: /home/itm_stud/test_ma_ws/MA_Experiment
 
 # Optional tmux socket
@@ -45,35 +45,36 @@ root: /home/itm_stud/test_ma_ws/MA_Experiment
 # attach: false
 
 windows:
-  - px4_autopilot:
-      root: /home/itm_stud/PX4-Autopilot
+  - ros_setup:
       layout: main-vertical
       panes:
-        - firmware:
-          - no_sim=1 make px4_sitl_default gazebo
-  - sitl:
-      # root: home/itm_stud/test_ma_ws/MA_Experiment
+        - opti_track:
+          - source ros.zsh
+          - roslaunch vrpn_client_ros sample.launch server:=192.168.1.111
+  - onboard_computer:
       layout: main-vertical
       # Synchronize all panes of this window, can be enabled before or after the pane commands run.
       # 'before' represents legacy functionality and will be deprecated in a future release, in favour of 'after'
       # synchronize: after
       panes:
-        - offboard:
-          - source ros.zsh
-        - uav_command:
-          - source ros.zsh
-        - mobile_command:
-          - source ros.zsh
-        - gazebo_launch:
-          - source ros.zsh
-          - roslaunch itm_nonlinear_mpc px4_sitl_launch.launch world_file:=<%= @settings["world_file"] %>
-  - trajectory:
-      # root: ~/achilles/test_ma_ws
+        - ssh_connection:
+          - ssh ubuntu@192.168.1.156
+  - px4_autopilot:
       layout: main-vertical
       panes:
-        - trajectory_publish:
+        - offboard_controller:
           - source ros.zsh
-        - trajectory_cmd:
+        - take_off:
           - source ros.zsh
-
+        - landing:
+          - source ros.zsh
+  - additional_tools:
+      layout: main-vertical
+      panes:
+        - rosbag:
+          - source ros.zsh
+        - trajectory_for_UAV:
+          - source ros.zsh
+        - trajectory_command:
+          - source ros.zsh
 

@@ -56,17 +56,17 @@
     <group unless="$(arg is_simulation)">
         <!-- <arg name="robot_loc_pose" default="/vrpn_client_node/ITM_Q300/pose" /> -->
         <arg name="robot_loc_pose" default="/vrpn_client_node/ITM_Q300/pose" />
-        <!-- <node name="pid_controller" pkg="itm_nonlinear_mpc" type="pid_controller" respawn="false" clear_params="true" output="screen" >
+        <node name="pid_controller" pkg="itm_nonlinear_mpc" type="pid_controller" respawn="false" clear_params="true" output="screen" >
             <remap from="/real_pose" to="$(arg robot_loc_pose)" />
             <param name="sim_only" value="$(arg is_simulation)"/>
             <param name="takeoff_height" value="$(arg takeoff_height)" />
-        </node> -->
-        <node name="mpc_controller" pkg="itm_nonlinear_mpc" type="mpc_controller" respawn="false" clear_params="true" output="screen" >
+        </node> 
+        <!-- <node name="mpc_controller" pkg="itm_nonlinear_mpc" type="mpc_controller" respawn="false" clear_params="true" output="screen" >
             <remap from="/real_pose" to="$(arg robot_loc_pose)" />
             <param name="sim_only" value="$(arg is_simulation)"/>
             <param name="takeoff_height" value="$(arg takeoff_height)" />
             <param name="control_offset" value="0.38" />
-        </node>
+        </node> -->
         <!-- <node name="mpc_controller" pkg="itm_nonlinear_mpc" type="mpc_q_controller" respawn="false" clear_params="true" output="screen" >
             <remap from="/real_pose" to="$(arg robot_loc_pose)" />
             <param name="sim_only" value="$(arg is_simulation)"/>
