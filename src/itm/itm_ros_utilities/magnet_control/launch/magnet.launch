@@ -1,0 +1,9 @@
+<launch>
+
+    <arg name="pubMagnet" default= "false" />
+      
+    <node name="client_magnet" pkg="magnet_control" type="magnet_client.py" output="screen">
+        <param name="pubMagnet" value="$(arg pubMagnet)" />
+    </node>
+
+</launch>
