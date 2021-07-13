@@ -55,18 +55,18 @@
     <!-- hardware experiment -->
     <group unless="$(arg is_simulation)">
         <!-- <arg name="robot_loc_pose" default="/vrpn_client_node/ITM_Q300/pose" /> -->
-        <arg name="robot_loc_pose" default="/vrpn_client_node/ITM_Q300/pose" />
-        <!-- <node name="pid_controller" pkg="itm_nonlinear_mpc" type="pid_controller" respawn="false" clear_params="true" output="screen" >
+        <arg name="robot_loc_pose" default="/vrpn_client_node/ITM_Q330/pose" />
+        <node name="pid_controller" pkg="itm_nonlinear_mpc" type="pid_controller" respawn="false" clear_params="true" output="screen" >
             <remap from="/real_pose" to="$(arg robot_loc_pose)" />
             <param name="sim_only" value="$(arg is_simulation)"/>
             <param name="takeoff_height" value="$(arg takeoff_height)" />
-        </node> -->
-        <node name="mpc_controller" pkg="itm_nonlinear_mpc" type="mpc_controller" respawn="false" clear_params="true" output="screen" >
+        </node> 
+        <!-- <node name="mpc_controller" pkg="itm_nonlinear_mpc" type="mpc_controller" respawn="false" clear_params="true" output="screen" >
             <remap from="/real_pose" to="$(arg robot_loc_pose)" />
             <param name="sim_only" value="$(arg is_simulation)"/>
             <param name="takeoff_height" value="$(arg takeoff_height)" />
             <param name="control_offset" value="0.38" />
-        </node>
+        </node> -->
         <!-- <node name="mpc_controller" pkg="itm_nonlinear_mpc" type="mpc_q_controller" respawn="false" clear_params="true" output="screen" >
             <remap from="/real_pose" to="$(arg robot_loc_pose)" />
             <param name="sim_only" value="$(arg is_simulation)"/>
@@ -82,7 +82,7 @@
             <param name="publish_path" value="true" />
             <param name="publish_markers" value="true" />
             <remap from="/uav_odom" to="/robot_pose" />
-            <remap from="/uav_pose" to="/vrpn_client_node/ITM_Q300/pose" />
+            <remap from="/uav_pose" to="/vrpn_client_node/ITM_Q330/pose" />
             <remap from="/desired_trajectory" to="/robot_trajectory" />
         </node>
     </group>
@@ -101,7 +101,7 @@
         </node>
     </group>
     <group unless="$(arg is_simulation)">
-        <arg name="robot_loc_pose" default="/vrpn_client_node/ITM_Q300/pose" />
+        <arg name="robot_loc_pose" default="/vrpn_client_node/ITM_Q330/pose" />
         <node name="offboard_node" pkg="itm_nonlinear_mpc" type="px4_controller" respawn="false" clear_params="true" output="screen" launch-prefix="zsh -c 'sleep $(arg node_start_delay1); $0 $@'">
             <remap from="/real_pose" to="$(arg robot_loc_pose)" />
             <param name="controller" value="$(arg controller)"/>

@@ -1,7 +1,7 @@
 # ./.tmuxinator.yml
 
 name: sitl_gazebo
-root: /home/achilles/test_ma_ws
+root: /home/itm_stud/test_ma_ws/MA_Experiment
 
 # Optional tmux socket
 # socket_name: foo
@@ -46,13 +46,13 @@ root: /home/achilles/test_ma_ws
 
 windows:
   - px4_autopilot:
-      root: /home/achilles/PX4_Firmware
+      root: /home/itm_stud/PX4-Autopilot
       layout: main-vertical
       panes:
         - firmware:
           - no_sim=1 make px4_sitl_default gazebo
   - sitl:
-      # root: ~/achilles/test_ma_ws
+      # root: home/itm_stud/test_ma_ws/MA_Experiment
       layout: main-vertical
       # Synchronize all panes of this window, can be enabled before or after the pane commands run.
       # 'before' represents legacy functionality and will be deprecated in a future release, in favour of 'after'

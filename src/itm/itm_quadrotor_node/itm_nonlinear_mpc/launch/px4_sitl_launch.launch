@@ -13,7 +13,7 @@
   <arg name="inc_robotino" default="true"/>
   <arg name="inc_summit" default="true"/>
   <!-- This is to identify the path of the Firmware in your machine  -->
-  <arg name="px4_path" default="/home/achilles/PX4_Firmware/Tools/sitl_gazebo" />
+  <arg name="px4_path" default="/home/itm_stud/PX4-Autopilot/Tools/sitl_gazebo" />
   <arg name="world_file" default="itm_s500.world" />
 
 

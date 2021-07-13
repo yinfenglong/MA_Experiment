@@ -15,7 +15,7 @@
 void normal_landing(double dt)
 {
     ROS_INFO_ONCE("Start Landing at current position");
-    if (abs(current_pos.pose.position.z - initial_pos.pose.position.z) <= 0.1)
+    if (abs(current_pos.pose.position.z - initial_pos.pose.position.z) <= 0.08)
     {
         offboard_set_mode.request.custom_mode = "MANUAL";
         if (set_mode_client.call(offboard_set_mode) && offboard_set_mode.response.mode_sent)
