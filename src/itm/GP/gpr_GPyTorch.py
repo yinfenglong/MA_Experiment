@@ -3,9 +3,9 @@
 
 '''
 Date: 24.07.2021
-Author: Yinfeng Long 
-usage 
-    python3 gpr_GPyTorch.py filename.npz 
+Author: Yinfeng Long
+usage
+    python3 gpr_GPyTorch.py filename.npz
 '''
 
 import sys
@@ -20,18 +20,20 @@ import time
 '''
 # ### From .pkl load datas ### #
 gp_train = joblib.load(sys.argv[1])
-x_train = torch.from_numpy( (gp_train['x_train']).flatten() ) # numpy into one dimension, then create a Tensor form from numpy (=torch.linspace) 
+x_train = torch.from_numpy( (gp_train['x_train']).flatten() ) # numpy into one dimension, then create a Tensor form from numpy (=torch.linspace)
 y_train = torch.from_numpy( (gp_train['y_train']).flatten() )
 '''
 
 # ### From .npz load datas for gp training### #
 gp_train = np.load(sys.argv[1])
-train_x = torch.from_numpy( (gp_train['arr_0']).flatten() ) # numpy into one dimension, then create a Tensor form from numpy (=torch.linspace)
-train_y = torch.from_numpy( (gp_train['arr_1']).flatten() ) 
-train_y += torch.randn(train_x.size()) * 0.01 #train_y += noise, noise ~ N(0,0.01)
+# numpy into one dimension, then create a Tensor form from numpy (=torch.linspace)
+train_x = torch.from_numpy((gp_train['arr_0'][:5000]).flatten())
+train_y = torch.from_numpy((gp_train['arr_1'][:5000]).flatten())
+# train_y += noise, noise ~ N(0,0.01)
+train_y += torch.randn(train_x.size()) * 0.01
 
-train_x= (train_x).float()
-train_y= (train_y).float()
+train_x = (train_x).float()
+train_y = (train_y).float()
 print(train_x.type())
 
 # print
@@ -52,16 +54,20 @@ hypers = {
 }
 
 # We will use the simplest form of GP model, exact inference
+
+
 class ExactGPModel(gpytorch.models.ExactGP):
     def __init__(self, train_x, train_y, likelihood):
         super(ExactGPModel, self).__init__(train_x, train_y, likelihood)
         self.mean_module = gpytorch.means.ConstantMean()
-        self.covar_module = gpytorch.kernels.ScaleKernel(gpytorch.kernels.RBFKernel())
+        self.covar_module = gpytorch.kernels.ScaleKernel(
+            gpytorch.kernels.RBFKernel())
 
     def forward(self, x):
         mean_x = self.mean_module(x)
         covar_x = self.covar_module(x)
         return gpytorch.distributions.MultivariateNormal(mean_x, covar_x)
+
 
 # initialize likelihood and model
 likelihood = gpytorch.likelihoods.GaussianLikelihood()
@@ -102,11 +108,12 @@ likelihood.eval()
 # Make predictions by feeding model through likelihood
 with torch.no_grad(), gpytorch.settings.fast_pred_var():
     test_x = torch.linspace(-16, 16, 100, dtype=torch.float)
-    # test_x = train_x 
+    # test_x = train_x
     t1 = datetime.datetime.now()
     observed_pred = likelihood(model(test_x))
     t2 = datetime.datetime.now()
-    print("predict time of GPyTorch (predict 100 new numbers):", (t2-t1).microseconds )
+    print("predict time of GPyTorch (predict 100 new numbers):",
+          (t2 - t1).microseconds)
 
 with torch.no_grad():
     # Initialize plot
