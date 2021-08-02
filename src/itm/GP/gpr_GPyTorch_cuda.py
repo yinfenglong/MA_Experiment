@@ -30,6 +30,8 @@ if torch.cuda.is_available():
 else:
     device = torch.device("cpu")
 
+# device = torch.device("cpu")
+
 # ### From .npz load datas for gp training### #
 gp_train = np.load(sys.argv[1])
 print(gp_train['arr_0'].shape)
@@ -40,8 +42,8 @@ train_y = torch.from_numpy(
 # train_y += noise, noise ~ N(0,0.01)
 train_y += torch.randn(train_x.size()) * 0.01
 
-train_x = (train_x).float().cuda()
-train_y = (train_y).float().cuda()
+train_x = (train_x).float().to(device)
+train_y = (train_y).float().to(device)
 
 # print
 print("gp_train[arr_1]: ", gp_train['arr_1'])
@@ -55,9 +57,9 @@ sigma_n = 0.01
 """
 
 hypers = {
-    'covar_module.base_kernel.lengthscale': torch.tensor(0.1).cuda(),
-    'covar_module.outputscale': torch.tensor(0.5).cuda(),
-    'likelihood.noise_covar.noise': torch.tensor(0.01).cuda(),
+    'covar_module.base_kernel.lengthscale': torch.tensor(0.1).to(device),
+    'covar_module.outputscale': torch.tensor(0.5).to(device),
+    'likelihood.noise_covar.noise': torch.tensor(0.01).to(device),
 }
 
 # We will use the simplest form of GP model, exact inference
@@ -77,8 +79,8 @@ class ExactGPModel(gpytorch.models.ExactGP):
 
 
 # initialize likelihood and model
-likelihood = gpytorch.likelihoods.GaussianLikelihood().cuda()
-model = ExactGPModel(train_x, train_y, likelihood).cuda()
+likelihood = gpytorch.likelihoods.GaussianLikelihood().to(device)
+model = ExactGPModel(train_x, train_y, likelihood).to(device)
 model.initialize(**hypers)
 model.train()
 likelihood.train()
@@ -109,42 +111,46 @@ for i in range(training_iter):
 
     # Get into evaluation (predictive posterior) mode
 torch.save(model.state_dict(), './best.pth')
-torch.save(likelihood, './best_l.pth')
+# torch.save(likelihood, './best_l.pth')
 
 ##############################
 # prediction #
 ##############################
 
-if not torch.cuda.is_available():
-    device = torch.device("cpu")
-    target_device = 'cpu'
-else:
-    device = torch.device("cuda")
-    target_device = 'cuda:0'
+# if not torch.cuda.is_available():
+#     device = torch.device("cpu")
+#     target_device = 'cpu'
+# else:
+#     device = torch.device("cuda")
+#     target_device = 'cuda:0'
 
+target_device = 'cpu'
 
-# likelihood_to_predict = gpytorch.likelihoods.GaussianLikelihood()
-# print("dfddfdfd")
-# likelihood_to_predict.load_state_dict(
-#     torch.load('./best_l.pth', map_location=target_device))
 print("dfddfdfd")
 model_to_predict = ExactGPModel(train_x, train_y, likelihood).to(target_device)
 model_to_predict.load_state_dict(torch.load(
     './best.pth', map_location=target_device))
 
+likelihood_pred = gpytorch.likelihoods.GaussianLikelihood().to(target_device)
+# model_to_predict = model
+# likelihood_pred = likelihood
 model_to_predict.eval()
-likelihood.eval()
+likelihood_pred.eval()
 
 # Test points are regularly spaced along [-16,16]
 # Make predictions by feeding model through likelihood
-test_x = torch.linspace(-16, 16, 100, dtype=torch.float).to(device)
+test_x = torch.linspace(-16, 16, 100, dtype=torch.float).to(target_device)
 with torch.no_grad(), gpytorch.settings.fast_pred_var():
     # test_x = train_x
-    t1 = time.time()
-    observed_pred = likelihood(model_to_predict(test_x))
-    t2 = time.time()
+    # t1 = time.time()
+    t1 = datetime.datetime.now()
+    observed_pred = likelihood_pred(model_to_predict(test_x))
+    # t2 = time.time()
+    t2 = datetime.datetime.now()
+    # print("predict time of GPyTorch (predict 100 new numbers):",
+    #       (t2 - t1))
     print("predict time of GPyTorch (predict 100 new numbers):",
-          (t2 - t1))
+          (t2 - t1).microseconds)
 
 with torch.no_grad():
     # Initialize plot
@@ -154,7 +160,10 @@ with torch.no_grad():
     lower, upper = observed_pred.confidence_region()
     train_x_cpu = train_x.cpu()
     train_y_cpu = train_y.cpu()
-    test_x_cpu = test_x.cpu()
+    if target_device == 'cuda:0':
+        test_x_cpu = test_x.cpu()
+    else:
+        test_x_cpu = test_x
     # Plot training data as black stars
     ax.plot(train_x_cpu.numpy(), train_y_cpu.numpy(), 'k*', alpha=0.1)
     # print("test_x: ", test_x.numpy())
