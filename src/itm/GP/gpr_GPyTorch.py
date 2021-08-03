@@ -27,15 +27,11 @@ y_train = torch.from_numpy( (gp_train['y_train']).flatten() )
 # ### From .npz load datas for gp training### #
 gp_train = np.load(sys.argv[1])
 
-train_x = torch.from_numpy( (gp_train['arr_0']).flatten()) # numpy into one dimension, then create a Tensor form from numpy (=torch.linspace)
-train_y = torch.from_numpy( (gp_train['arr_1']).flatten() ) 
-train_y += torch.randn(train_x.size()) * 0.01 #train_y += noise, noise ~ N(0,0.01)
-
-train_y= (train_y).float()
-
 # numpy into one dimension, then create a Tensor form from numpy (=torch.linspace)
-train_x = torch.from_numpy((gp_train['arr_0'][:5000]).flatten())
-train_y = torch.from_numpy((gp_train['arr_1'][:5000]).flatten())
+# train_x = torch.from_numpy((gp_train['arr_0'][:5000]).flatten())
+# train_y = torch.from_numpy((gp_train['arr_1'][:5000]).flatten())
+train_x = torch.from_numpy((gp_train['arr_0']).flatten())
+train_y = torch.from_numpy((gp_train['arr_1']).flatten())
 # train_y += noise, noise ~ N(0,0.01)
 train_y += torch.randn(train_x.size()) * 0.01
 
