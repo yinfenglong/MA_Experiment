@@ -3,5 +3,6 @@ predict time of GPyTorch 363698 (10 iterations)
 predict time of GPyTorch 314621 (2 iterations)
 predict time of data_driven:  277751
 
+predict time of GPyTorch (predict 1 new number): 131282
 predict time of GPyTorch (predict 100 new numbers): 238063
 
