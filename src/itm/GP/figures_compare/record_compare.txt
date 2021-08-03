@@ -6,3 +6,44 @@ predict time of data_driven:  277751
 predict time of GPyTorch (predict 1 new number): 131282
 predict time of GPyTorch (predict 100 new numbers): 238063
 
+
+################
+unit:s
+################
+
+#########
+training
+########
+
+CPU training time (train 5000 numbers):  5.9527223110198975
+cuda GPU training time (train 5000 numbers):  2.7341320514678955
+
+CPU training time (train 5000 numbers): 55.64882516860962
+cuda GPU training time (train all numbers):  7.8451621532440186
+
+
+#########
+predict
+########
+
+14715 datas:
+predict time of data_driven:  1.3145334720611572
+predict time of GPyTorch (CPU):: 1.58770751953125
+predict time of GPyTorch (cuda GPU): 0.34568357467651367
+
+
+CPU predict time (predict 100 new numbers): 1.2676162719726562
+cuda GPU predict time (predict 100 new numbers): 0.3270599842071533
+
+CPU predict time (predict 10 times the same number): 1.3210868835449219
+cuda GPU predict time (predict 10 times the same number): 0.3319995403289795
+(predict 10 different numbers, the results are the same)
+
+CPU predict time (predict 1 number): 1.3113908767700195
+cuda GPU predict time (predict 1 number): 0.32466721534729004
+
+
+
+
+
+

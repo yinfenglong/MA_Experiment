@@ -2,10 +2,10 @@
 # coding=utf-8
 
 '''
-Date: 24.07.2021
+Date: 03.08.2021
 Author: Yinfeng Long
 usage
-    python3 gpr_GPyTorch.py filename.npz
+    python3 gpr_GPyTorch_predict.py file_name.npz
 '''
 
 import sys
@@ -25,14 +25,14 @@ x_train = torch.from_numpy( (gp_train['x_train']).flatten() )
 y_train = torch.from_numpy( (gp_train['y_train']).flatten() )
 '''
 
-if torch.cuda.is_available():
-    device = torch.device("cuda")
-else:
-    device = torch.device("cpu")
+# if torch.cuda.is_available():
+#     device = torch.device("cuda")
+# else:
+#     device = torch.device("cpu")
 
-# device = torch.device("cpu")
+device = torch.device("cpu")
 
-# ### From .npz load datas for gp training### #
+# # ### From .npz load datas for gp training### #
 gp_train = np.load(sys.argv[1])
 print(gp_train['arr_0'].shape)
 # numpy into one dimension, then create a Tensor form from numpy (=torch.linspace)
@@ -45,26 +45,10 @@ train_y += torch.randn(train_x.size()) * 0.01
 train_x = (train_x).float().to(device)
 train_y = (train_y).float().to(device)
 
-# print
-print("gp_train[arr_1]: ", gp_train['arr_1'])
-print("train_x: ", train_x)
-print("train_y: ", train_y)
-"""
-# ### Prior theta Parameters ### #
-l_scale = 0.1
-sigma_f = 0.5
-sigma_n = 0.01
-"""
 
-hypers = {
-    'covar_module.base_kernel.lengthscale': torch.tensor(0.1).to(device),
-    'covar_module.outputscale': torch.tensor(0.5).to(device),
-    'likelihood.noise_covar.noise': torch.tensor(0.01).to(device),
-}
-
-# We will use the simplest form of GP model, exact inference
-
-
+##############################
+# prediction #
+##############################
 class ExactGPModel(gpytorch.models.ExactGP):
     def __init__(self, train_x, train_y, likelihood):
         super(ExactGPModel, self).__init__(train_x, train_y, likelihood)
@@ -77,46 +61,6 @@ class ExactGPModel(gpytorch.models.ExactGP):
         covar_x = self.covar_module(x)
         return gpytorch.distributions.MultivariateNormal(mean_x, covar_x)
 
-
-# initialize likelihood and model
-likelihood = gpytorch.likelihoods.GaussianLikelihood().to(device)
-model = ExactGPModel(train_x, train_y, likelihood).to(device)
-model.initialize(**hypers)
-model.train()
-likelihood.train()
-
-# Use the adam optimizer
-optimizer = torch.optim.Adam([
-    {'params': model.parameters()},  # Includes GaussianLikelihood parameters
-], lr=0.1)
-
-# "Loss" for GPs - the marginal log likelihood
-mll = gpytorch.mlls.ExactMarginalLogLikelihood(likelihood, model)
-
-training_iter = 10
-for i in range(training_iter):
-    # Zero gradients from previous iteration
-    optimizer.zero_grad()
-    # Output from model
-    output = model(train_x)
-    # Calc loss and backprop gradients
-    loss = -mll(output, train_y)
-    loss.backward()
-    print('Iter %d/%d - Loss: %.3f   lengthscale: %.3f   noise: %.3f' % (
-        i + 1, training_iter, loss.item(),
-        model.covar_module.base_kernel.lengthscale.item(),
-        model.likelihood.noise.item()
-    ))
-    optimizer.step()
-
-    # Get into evaluation (predictive posterior) mode
-torch.save(model.state_dict(), './best.pth')
-# torch.save(likelihood, './best_l.pth')
-
-##############################
-# prediction #
-##############################
-
 # if not torch.cuda.is_available():
 #     device = torch.device("cpu")
 #     target_device = 'cpu'
@@ -124,14 +68,25 @@ torch.save(model.state_dict(), './best.pth')
 #     device = torch.device("cuda")
 #     target_device = 'cuda:0'
 
-target_device = 'cpu'
+target_device = 'cuda:0'
 
-print("dfddfdfd")
-model_to_predict = ExactGPModel(train_x, train_y, likelihood).to(target_device)
-model_to_predict.load_state_dict(torch.load(
-    './best.pth', map_location=target_device))
+likelihood_pred = gpytorch.likelihoods.GaussianLikelihood()
+model_to_predict = ExactGPModel(train_x, train_y, likelihood_pred).to(target_device)
 
-likelihood_pred = gpytorch.likelihoods.GaussianLikelihood().to(target_device)
+if torch.cuda.is_available():
+    model_state_dict = torch.load('./model_state.pth')
+    likelihood_state_dict = torch.load('./likelihood_state.pth')
+else:
+    model_state_dict = torch.load('./model_state.pth', map_location=target_device)
+    likelihood_state_dict = torch.load('./likelihood_state.pth', map_location=target_device)
+model_to_predict.load_state_dict(model_state_dict)
+likelihood_pred.load_state_dict(likelihood_state_dict)
+
+# model_to_predict = ExactGPModel(train_x, train_y, likelihood).to(target_device)
+# model_to_predict.load_state_dict(torch.load(
+#     './best.pth', map_location=target_device))
+# likelihood_pred = gpytorch.likelihoods.GaussianLikelihood().to(target_device)
+
 # model_to_predict = model
 # likelihood_pred = likelihood
 model_to_predict.eval()
@@ -139,18 +94,20 @@ likelihood_pred.eval()
 
 # Test points are regularly spaced along [-16,16]
 # Make predictions by feeding model through likelihood
-test_x = torch.linspace(-16, 16, 100, dtype=torch.float).to(target_device)
+test_x = torch.linspace(-16, 16, 10, dtype=torch.float).to(target_device)
+# test_x = train_x.to(target_device)
 with torch.no_grad(), gpytorch.settings.fast_pred_var():
     # test_x = train_x
-    # t1 = time.time()
-    t1 = datetime.datetime.now()
+    t1 = time.time()
+    # t1 = datetime.datetime.now()
+    # for i in range(10):
     observed_pred = likelihood_pred(model_to_predict(test_x))
-    # t2 = time.time()
-    t2 = datetime.datetime.now()
-    # print("predict time of GPyTorch (predict 100 new numbers):",
-    #       (t2 - t1))
+    t2 = time.time()
+    # t2 = datetime.datetime.now()
     print("predict time of GPyTorch (predict 100 new numbers):",
-          (t2 - t1).microseconds)
+          (t2 - t1))
+    # print("predict time of GPyTorch (predict 100 new numbers):",
+        #   (t2 - t1).microseconds)
 
 with torch.no_grad():
     # Initialize plot
@@ -169,7 +126,7 @@ with torch.no_grad():
     # print("test_x: ", test_x.numpy())
     # print("test_x.numpy().shape: ", test_x.numpy().shape )
     # Plot predictive means as blue line
-    ax.plot(test_x_cpu.numpy(), observed_pred.mean.cpu().numpy(), 'r')
+    ax.plot(test_x_cpu.numpy(), observed_pred.mean.cpu().numpy(), 'r*')
     # ax.plot(test_x.numpy(), observed_pred.mean.numpy(), 'bs')
     # Shade between the lower and upper confidence bounds
     ax.fill_between(test_x_cpu.numpy(), lower.cpu().numpy(),

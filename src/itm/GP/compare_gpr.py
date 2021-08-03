@@ -112,10 +112,10 @@ with torch.no_grad(), gpytorch.settings.fast_pred_var():
     test_x = ( torch.from_numpy( data_driven_x ) ).float()
     # test_x = torch.linspace(-16, 16, 100, dtype=torch.float)
     # test_x = train_x 
-    t1 = datetime.datetime.now()
+    t1 = time.time()
     observed_pred = likelihood(model(test_x))
-    t2 = datetime.datetime.now()
-    print("predict time of GPyTorch:", (t2-t1).microseconds )
+    t2 = time.time()
+    print("predict time of GPyTorch:", (t2-t1) )
 
 with torch.no_grad():
     # Initialize plot
