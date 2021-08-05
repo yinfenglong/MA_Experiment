@@ -94,8 +94,8 @@ likelihood_pred.eval()
 
 # Test points are regularly spaced along [-16,16]
 # Make predictions by feeding model through likelihood
-test_x = torch.linspace(-16, 16, 10, dtype=torch.float).to(target_device)
-# test_x = train_x.to(target_device)
+# test_x = torch.linspace(-16, 16, 10, dtype=torch.float).to(target_device)
+test_x = train_x.to(target_device)
 with torch.no_grad(), gpytorch.settings.fast_pred_var():
     # test_x = train_x
     t1 = time.time()
@@ -108,7 +108,14 @@ with torch.no_grad(), gpytorch.settings.fast_pred_var():
           (t2 - t1))
     # print("predict time of GPyTorch (predict 100 new numbers):",
         #   (t2 - t1).microseconds)
-
+    
+    ############
+    # select gp
+    ############
+    sum_distance = np.sum( np.sqrt( ( observed_pred.mean.cpu().numpy() - 0.10001323  )**2 )   )
+    print("sum of distance:",
+          sum_distance )
+    
 with torch.no_grad():
     # Initialize plot
     f, ax = plt.subplots(1, 1, figsize=(4, 3))

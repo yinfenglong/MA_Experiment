@@ -5,7 +5,7 @@
 Date: 03.08.2021
 Author: Yinfeng Long
 usage
-    python3 gpr_GPyTorch.py filename.npz
+    python3 gpr_GPyTorch_train.py filename.npz
 '''
 
 import sys
@@ -25,12 +25,12 @@ x_train = torch.from_numpy( (gp_train['x_train']).flatten() )
 y_train = torch.from_numpy( (gp_train['y_train']).flatten() )
 '''
 
-# if torch.cuda.is_available():
-#     device = torch.device("cuda")
-# else:
-#     device = torch.device("cpu")
+if torch.cuda.is_available():
+    device = torch.device("cuda")
+else:
+    device = torch.device("cpu")
 
-device = torch.device("cpu")
+# device = torch.device("cpu")
 time_1 = time.time()
 # ### From .npz load datas for gp training### #
 gp_train = np.load(sys.argv[1])

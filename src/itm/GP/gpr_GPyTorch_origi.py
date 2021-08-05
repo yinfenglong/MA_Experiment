@@ -5,7 +5,7 @@
 Date: 24.07.2021
 Author: Yinfeng Long 
 usage 
-    python3 gpr_GPyTorch.py filename.npz 
+    python3 gpr_GPyTorch_origi.py filename.npz 
 '''
 
 import sys

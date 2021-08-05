@@ -44,6 +44,15 @@ cuda GPU predict time (predict 1 number): 0.32466721534729004
 
 
 
+################
+select gp
+################
+data_driven: sum of euclidean distance between 14715 datas and centroid: 62950.31588950938
+GPyTorch (GPU) sum of distance: 17038.443
+
+
+
+
 
 
 

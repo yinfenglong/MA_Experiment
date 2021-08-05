@@ -5,7 +5,8 @@
 Date: 24.07.2021
 Author: Yinfeng Long
 usage
-    python3 gpr_GPyTorch_cuda.py filename.npz
+    python3 compare_gpr_cuda.py filename1.npz filename2.npz
+    python3 compare_gpr_cuda.py cluster_data_for_gp_x.npz compare_gp_data_x.npz
 '''
 
 import sys
@@ -44,6 +45,13 @@ train_y += torch.randn(train_x.size()) * 0.01
 
 train_x = (train_x).float().to(device)
 train_y = (train_y).float().to(device)
+
+# ### data_driven datas
+data_driven = np.load(sys.argv[2])
+data_driven_x =  (data_driven['arr_0']).flatten() 
+data_driven_y =  (data_driven['arr_1']).flatten() 
+print("data_driven_x_type", data_driven_x.shape )
+print("data_driven_y_type", data_driven_y.shape )
 
 # print
 print("gp_train[arr_1]: ", gp_train['arr_1'])
@@ -139,7 +147,8 @@ likelihood_pred.eval()
 
 # Test points are regularly spaced along [-16,16]
 # Make predictions by feeding model through likelihood
-test_x = torch.linspace(-16, 16, 100, dtype=torch.float).to(target_device)
+# test_x = torch.linspace(-16, 16, 100, dtype=torch.float).to(target_device)
+test_x = ( torch.from_numpy( data_driven_x ) ).float().to(target_device)
 with torch.no_grad(), gpytorch.settings.fast_pred_var():
     # test_x = train_x
     # t1 = time.time()
@@ -169,7 +178,8 @@ with torch.no_grad():
     # print("test_x: ", test_x.numpy())
     # print("test_x.numpy().shape: ", test_x.numpy().shape )
     # Plot predictive means as blue line
-    ax.plot(test_x_cpu.numpy(), observed_pred.mean.cpu().numpy(), 'r')
+    ax.plot(data_driven_x, data_driven_y, 'g*')
+    ax.plot(test_x_cpu.numpy(), observed_pred.mean.cpu().numpy(), 'r*')
     # ax.plot(test_x.numpy(), observed_pred.mean.numpy(), 'bs')
     # Shade between the lower and upper confidence bounds
     ax.fill_between(test_x_cpu.numpy(), lower.cpu().numpy(),
@@ -178,4 +188,13 @@ with torch.no_grad():
     ax.legend(['Observed Data', 'Mean', 'Confidence'])
     # print("observed_pred.mean.numpy(): ", observed_pred.mean.numpy())
     # print("observed_pred.mean.numpy().shape: ", observed_pred.mean.numpy().shape )
+
+    #'''
+    f, ax2 = plt.subplots(1, 1, figsize=(4, 3))
+    # error = np.setdiff1d( observed_pred.mean.numpy(), data_driven_y)
+    error = observed_pred.mean.cpu().numpy() - data_driven_y
+    ax2.plot(test_x.cpu().numpy(), error, 'g*')
+    # ax2.plot(test_x.numpy()[:14000], error[:14000], 'g*')
+    ax2.legend(['difference_of_mean'])
+    #'''
 plt.show()

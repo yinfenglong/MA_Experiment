@@ -5,7 +5,8 @@
 Date: 24.07.2021
 Author: Yinfeng Long 
 usage 
-    python3 gpr_GPyTorch.py filename1.npz filename2.npz
+    python3 compare_gpr.py filename1.npz filename2.npz
+    python3 compare_gpr.py cluster_data_for_gp_x.npz compare_gp_data_x.npz
 '''
 
 import sys
@@ -86,7 +87,7 @@ optimizer = torch.optim.Adam([
 # "Loss" for GPs - the marginal log likelihood
 mll = gpytorch.mlls.ExactMarginalLogLikelihood(likelihood, model)
 
-training_iter = 2
+training_iter = 10
 for i in range(training_iter):
     # Zero gradients from previous iteration
     optimizer.zero_grad()
@@ -136,13 +137,17 @@ with torch.no_grad():
     ax.set_ylim([-21, 21])
     ax.legend(['Observed Data', 'predict_of_data_driven', 'predict_of_GPrTorch', 'confidence'])
     # ax.legend(['Observed Data', 'Mean', 'Confidence'])
-    # print("observed_pred.mean.numpy(): ", observed_pred.mean.numpy())
-    # print("observed_pred.mean.numpy().shape: ", observed_pred.mean.numpy().shape )
+    print("observed_pred.mean.numpy(): ", observed_pred.mean.numpy())
+    print("observed_pred.mean.numpy().shape: ", observed_pred.mean.numpy().shape )
+    print("data_driven_y: ", data_driven_y )
+    print("data_driven_y.shape: ", data_driven_y.shape )
     
-    '''
+    #'''
     f, ax2 = plt.subplots(1, 1, figsize=(4, 3))
-    error = np.setdiff1d( observed_pred.mean.numpy(), data_driven_y) 
-    ax2.plot(test_x.numpy()[:14000], error[:14000], 'g*')
+    # error = np.setdiff1d( observed_pred.mean.numpy(), data_driven_y)
+    error = observed_pred.mean.numpy() - data_driven_y
+    ax2.plot(test_x.numpy(), error, 'g*')
+    # ax2.plot(test_x.numpy()[:14000], error[:14000], 'g*')
     ax2.legend(['difference_of_mean'])
-    '''
+    #'''
 plt.show()
