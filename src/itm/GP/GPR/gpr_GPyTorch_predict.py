@@ -94,8 +94,8 @@ likelihood_pred.eval()
 
 # Test points are regularly spaced along [-16,16]
 # Make predictions by feeding model through likelihood
-# test_x = torch.linspace(-16, 16, 10, dtype=torch.float).to(target_device)
-test_x = train_x.to(target_device)
+test_x = torch.linspace(-16, 16, 100, dtype=torch.float).to(target_device)
+# test_x = train_x.to(target_device)
 with torch.no_grad(), gpytorch.settings.fast_pred_var():
     # test_x = train_x
     t1 = time.time()
