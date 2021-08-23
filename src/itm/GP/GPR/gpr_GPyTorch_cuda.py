@@ -17,14 +17,6 @@ from matplotlib import pyplot as plt
 import datetime
 import time
 
-'''
-# ### From .pkl load datas ### #
-gp_train = joblib.load(sys.argv[1])
-# numpy into one dimension, then create a Tensor form from numpy (=torch.linspace)
-x_train = torch.from_numpy( (gp_train['x_train']).flatten() )
-y_train = torch.from_numpy( (gp_train['y_train']).flatten() )
-'''
-
 if torch.cuda.is_available():
     device = torch.device("cuda")
 else:
@@ -40,7 +32,7 @@ train_x = torch.from_numpy((gp_train['arr_0'][:5000]).flatten())
 train_y = torch.from_numpy(
     (gp_train['arr_1'][:5000]).flatten())  # numpy into one
 # train_y += noise, noise ~ N(0,0.01)
-train_y += torch.randn(train_x.size()) * 0.01
+# train_y += torch.randn(train_x.size()) * 0.01
 
 train_x = (train_x).float().to(device)
 train_y = (train_y).float().to(device)
@@ -55,16 +47,18 @@ l_scale = 0.1
 sigma_f = 0.5
 sigma_n = 0.01
 """
-
+# hypers = {
+    # 'covar_module.base_kernel.lengthscale': torch.tensor(0.1).to(device),
+    # 'covar_module.outputscale': torch.tensor(0.5).to(device),
+    # 'likelihood.noise_covar.noise': torch.tensor(0.01).to(device),
+# }
 hypers = {
-    'covar_module.base_kernel.lengthscale': torch.tensor(0.1).to(device),
+    'covar_module.base_kernel.lengthscale': torch.tensor(1).to(device),
     'covar_module.outputscale': torch.tensor(0.5).to(device),
     'likelihood.noise_covar.noise': torch.tensor(0.01).to(device),
 }
 
 # We will use the simplest form of GP model, exact inference
-
-
 class ExactGPModel(gpytorch.models.ExactGP):
     def __init__(self, train_x, train_y, likelihood):
         super(ExactGPModel, self).__init__(train_x, train_y, likelihood)
@@ -93,7 +87,7 @@ optimizer = torch.optim.Adam([
 # "Loss" for GPs - the marginal log likelihood
 mll = gpytorch.mlls.ExactMarginalLogLikelihood(likelihood, model)
 
-training_iter = 2
+training_iter = 50 
 for i in range(training_iter):
     # Zero gradients from previous iteration
     optimizer.zero_grad()
@@ -165,7 +159,7 @@ with torch.no_grad():
     else:
         test_x_cpu = test_x
     # Plot training data as black stars
-    ax.plot(train_x_cpu.numpy(), train_y_cpu.numpy(), 'k*', alpha=0.1)
+    ax.plot(train_x_cpu.numpy(), train_y_cpu.numpy(), 'k*', alpha=0.5)
     # print("test_x: ", test_x.numpy())
     # print("test_x.numpy().shape: ", test_x.numpy().shape )
     # Plot predictive means as blue line

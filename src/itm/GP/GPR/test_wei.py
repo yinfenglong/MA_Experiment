@@ -31,7 +31,7 @@ class ExactGPModel(gpytorch.models.ExactGP):
 
 if __name__ == '__main__':
     file_path = os.path.dirname(os.path.realpath(__file__))
-    data = np.load(file_path + '/for_gp_data.npz')
+    data = np.load(file_path + '/for_gp_data_z.npz')
 
     if torch.cuda.is_available():
         device = torch.device("cuda")
@@ -81,6 +81,7 @@ if __name__ == '__main__':
     # Make predictions by feeding model through likelihood
     with torch.no_grad(), gpytorch.settings.fast_pred_var():
         test_x = torch.rand(31) * (12 + 11) - 11
+        # test_x = torch.linspace(-16, 16, 100, dtype=torch.float)
         observed_pred = likelihood(model(test_x.to(device)))
 
     with torch.no_grad():

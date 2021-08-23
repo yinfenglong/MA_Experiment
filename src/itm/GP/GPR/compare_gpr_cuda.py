@@ -18,14 +18,6 @@ from matplotlib import pyplot as plt
 import datetime
 import time
 
-'''
-# ### From .pkl load datas ### #
-gp_train = joblib.load(sys.argv[1])
-# numpy into one dimension, then create a Tensor form from numpy (=torch.linspace)
-x_train = torch.from_numpy( (gp_train['x_train']).flatten() )
-y_train = torch.from_numpy( (gp_train['y_train']).flatten() )
-'''
-
 if torch.cuda.is_available():
     device = torch.device("cuda")
 else:
@@ -41,7 +33,7 @@ train_x = torch.from_numpy((gp_train['arr_0'][:5000]).flatten())
 train_y = torch.from_numpy(
     (gp_train['arr_1'][:5000]).flatten())  # numpy into one
 # train_y += noise, noise ~ N(0,0.01)
-train_y += torch.randn(train_x.size()) * 0.01
+# train_y += torch.randn(train_x.size()) * 0.01
 
 train_x = (train_x).float().to(device)
 train_y = (train_y).float().to(device)
@@ -65,14 +57,12 @@ sigma_n = 0.01
 """
 
 hypers = {
-    'covar_module.base_kernel.lengthscale': torch.tensor(0.1).to(device),
+    'covar_module.base_kernel.lengthscale': torch.tensor(1).to(device),
     'covar_module.outputscale': torch.tensor(0.5).to(device),
     'likelihood.noise_covar.noise': torch.tensor(0.01).to(device),
 }
 
 # We will use the simplest form of GP model, exact inference
-
-
 class ExactGPModel(gpytorch.models.ExactGP):
     def __init__(self, train_x, train_y, likelihood):
         super(ExactGPModel, self).__init__(train_x, train_y, likelihood)
@@ -101,7 +91,7 @@ optimizer = torch.optim.Adam([
 # "Loss" for GPs - the marginal log likelihood
 mll = gpytorch.mlls.ExactMarginalLogLikelihood(likelihood, model)
 
-training_iter = 2
+training_iter = 50
 for i in range(training_iter):
     # Zero gradients from previous iteration
     optimizer.zero_grad()
@@ -147,8 +137,8 @@ likelihood_pred.eval()
 
 # Test points are regularly spaced along [-16,16]
 # Make predictions by feeding model through likelihood
-# test_x = torch.linspace(-16, 16, 100, dtype=torch.float).to(target_device)
-test_x = ( torch.from_numpy( data_driven_x ) ).float().to(target_device)
+test_x = torch.linspace(-16, 16, 100, dtype=torch.float).to(target_device)
+# test_x = ( torch.from_numpy( data_driven_x ) ).float().to(target_device)
 with torch.no_grad(), gpytorch.settings.fast_pred_var():
     # test_x = train_x
     # t1 = time.time()
@@ -174,12 +164,12 @@ with torch.no_grad():
     else:
         test_x_cpu = test_x
     # Plot training data as black stars
-    ax.plot(train_x_cpu.numpy(), train_y_cpu.numpy(), 'k*', alpha=0.1)
+    ax.plot(train_x_cpu.numpy(), train_y_cpu.numpy(), 'k*', alpha=0.6)
     # print("test_x: ", test_x.numpy())
     # print("test_x.numpy().shape: ", test_x.numpy().shape )
     # Plot predictive means as blue line
     ax.plot(data_driven_x, data_driven_y, 'g*')
-    ax.plot(test_x_cpu.numpy(), observed_pred.mean.cpu().numpy(), 'r*')
+    ax.plot(test_x_cpu.numpy(), observed_pred.mean.cpu().numpy(), 'r')
     # ax.plot(test_x.numpy(), observed_pred.mean.numpy(), 'bs')
     # Shade between the lower and upper confidence bounds
     ax.fill_between(test_x_cpu.numpy(), lower.cpu().numpy(),
@@ -189,12 +179,12 @@ with torch.no_grad():
     # print("observed_pred.mean.numpy(): ", observed_pred.mean.numpy())
     # print("observed_pred.mean.numpy().shape: ", observed_pred.mean.numpy().shape )
 
-    #'''
+    '''
     f, ax2 = plt.subplots(1, 1, figsize=(4, 3))
     # error = np.setdiff1d( observed_pred.mean.numpy(), data_driven_y)
     error = observed_pred.mean.cpu().numpy() - data_driven_y
     ax2.plot(test_x.cpu().numpy(), error, 'g*')
     # ax2.plot(test_x.numpy()[:14000], error[:14000], 'g*')
     ax2.legend(['difference_of_mean'])
-    #'''
+    '''
 plt.show()
