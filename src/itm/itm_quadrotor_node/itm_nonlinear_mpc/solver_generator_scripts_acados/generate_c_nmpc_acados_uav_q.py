@@ -4,7 +4,7 @@
 Author: Wei Luo
 Date: 2021-06-01 11:47:52
 LastEditors: Wei Luo
-LastEditTime: 2021-06-04 00:05:31
+LastEditTime: 2021-08-17 16:00:48
 Note: Note
 '''
 
@@ -42,21 +42,36 @@ ocp.dims.np = n_params
 ocp.parameter_values = np.zeros(n_params)
 
 # cost function
-Q_m = np.diag([20,  # x
-               20,  # y
-               20,  # z
-               0.03,  # qw
-               0.03,  # qx
-               0.03,  # qy
-               0.03,  # qz
-               0.05,  # vx
-               0.05,  # vy
-               0.05  # vz
-               ])
+# Q_m = np.diag([20,  # x
+#                20,  # y
+#                20,  # z
+#                3.,  # qw
+#                3.,  # qx
+#                3.,  # qy
+#                3.,  # qz
+#                0.5,  # vx
+#                0.5,  # vy
+#                0.5  # vz
+#    ])
 # Q_m = np.diag([10, 10, 10,
 #                0.3, 0.3, 0.3, 0.3,
 #                0.05, 0.05, 0.05,
 #                ])  # position, q, v
+# P_m = np.diag([
+#     10,  # x
+#     10,  # y
+#     20,  # z
+#     0.05,  # vx
+#     0.05,  # vy
+#     0.05  # vz
+# ])
+
+# R_m = np.diag([2.0, 2.0, 5.0, 0.6])
+
+Q_m = np.diag([10, 10, 10,
+               0.8, 0.8, 0.8, 0.8,
+               0.05, 0.05, 0.05,
+               ])  # position, q, v
 P_m = np.diag([
     10,  # x
     10,  # y
@@ -65,11 +80,7 @@ P_m = np.diag([
     0.05,  # vy
     0.05  # vz
 ])
-
-# P_m = np.diag([10,  10, 10,
-#                0.05, 0.05, 0.05])
-
-R_m = np.diag([2.0, 2.0, 5.0, 0.6])
+R_m = np.diag([1.0, 1.0, 2.0, 0.6])
 
 ocp.cost.cost_type = 'LINEAR_LS'
 ocp.cost.cost_type_e = 'LINEAR_LS'
@@ -80,7 +91,7 @@ ocp.cost.Vx = np.zeros((ny, nx))
 ocp.cost.Vx[:nx, :nx] = np.eye(nx)
 ocp.cost.Vu = np.zeros((ny, nu))
 ocp.cost.Vu[-nu:, -nu:] = np.eye(nu)
-ocp.cost.Vx_e = np.zeros((nx-4, nx))  # 4: quaternion
+ocp.cost.Vx_e = np.zeros((nx - 4, nx))  # 4: quaternion
 ocp.cost.Vx_e[:3, :3] = np.eye(3)
 ocp.cost.Vx_e[-3:, -3:] = np.eye(3)
 
@@ -88,7 +99,7 @@ ocp.cost.Vx_e[-3:, -3:] = np.eye(3)
 g = 9.8066
 x_ref = np.zeros(nx)
 x_ref[3] = 1.0
-x_ref_e = np.zeros(nx-4)
+x_ref_e = np.zeros(nx - 4)
 u_ref = np.zeros(nu)
 u_ref[-1] = g
 ocp.cost.yref = np.concatenate((x_ref, u_ref))

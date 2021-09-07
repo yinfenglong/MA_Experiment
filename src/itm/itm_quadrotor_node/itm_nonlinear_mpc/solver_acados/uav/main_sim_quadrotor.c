@@ -93,13 +93,13 @@ int main()
     // set parameters
     double p[4];
     
-    p[0] = 2.477;
+    p[0] = 0.93;
     
-    p[1] = 0.47;
+    p[1] = 0.137;
     
-    p[2] = 2.477;
+    p[2] = 0.968;
     
-    p[3] = 0.47;
+    p[3] = 0.138;
     
 
     quadrotor_acados_sim_update_params(capsule, p, 4);

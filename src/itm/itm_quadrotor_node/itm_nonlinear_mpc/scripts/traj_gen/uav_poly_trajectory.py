@@ -6,7 +6,6 @@ import numpy as np
 import casadi as ca # using casadi for the optimization problem
 from qpsolvers import solve_qp # using qpsolvers library for the optimization problem
 from scipy.linalg import block_diag, solve
-import sys
 
 from matplotlib import pyplot as plt
 from matplotlib import rc
@@ -30,8 +29,7 @@ class Arrow3D(FancyArrowPatch):
         super().draw(renderer)
 
 class UAVTrajGen(TrajGen):
-    # def __init__(self, knots_:np.array, order_:list, dim_=4, maxContiOrder_=[4, 3], pos_dim=3):
-    def __init__(self, knots_, order_, dim_=4, maxContiOrder_=[4, 3], pos_dim=3):
+    def __init__(self, knots_:np.array, order_:list, dim_=4, maxContiOrder_=[4, 3], pos_dim=3):
         """
         initialize the class
             Args:
@@ -41,12 +39,7 @@ class UAVTrajGen(TrajGen):
                 dim_: as default the dimension of the uav trajectory has four (x, y, z, yaw)
                 maxContiOrder_: max continuity order
         """
-        if sys.version_info.major == 3:
-            self.python_version = 3
-            super().__init__(knots_, dim_)
-        else:
-            self.python_version = 2
-            TrajGen.__init__(self, knots_, dim_) # because of python 2
+        super().__init__(knots_, dim_)
         self.pos_order, self.ang_order = order_ # polynomial order
         self.position_dim = pos_dim
         self.maxContiOrder = maxContiOrder_
@@ -66,7 +59,7 @@ class UAVTrajGen(TrajGen):
         mat_ = np.diag([delT**i for i in range(num_polys)])
         return mat_
 
-    def scaleMatBigInv(self, poly_type):
+    def scaleMatBigInv(self, poly_type:str):
         """
         inverse matrix of time
             Args:
@@ -117,10 +110,7 @@ class UAVTrajGen(TrajGen):
     def addPin(self, pin_):
         t_ = pin_['t']
         X_ = pin_['X']
-        if self.python_version == 3:
-            super().addPin(pin_)
-        else:
-            super(UAVTrajGen, self).addPin(pin_)
+        super().addPin(pin_)
         m, _ = self.findSegInteval(t_)
         if len(X_.shape) == 2: # 2 dimension ==> loose pin
             if m in self.loosePinSet.keys():
@@ -353,7 +343,6 @@ class UAVTrajGen(TrajGen):
                 if m in self.fixPinSet.keys():
                     for pin in self.fixPinSet[m]:
                         aeqSet, beqSet = self.fixPinMatSet(pin, 'ang')
-                        # print('aeq set {0}'.format(aeqSet))
                         if AeqSet is None and aeqSet is not None:
                             AeqSet = aeqSet.reshape(self.dim-self.position_dim, -1, self.num_ang_variables)
                             BeqSet = beqSet.reshape(self.dim-self.position_dim, -1, 1)
@@ -362,11 +351,6 @@ class UAVTrajGen(TrajGen):
                             BeqSet = np.concatenate((BeqSet, beqSet.reshape(self.dim-self.position_dim, -1, 1)), axis=1)
                         else:
                             pass
-                        print(aeqSet)
-                        print(beqSet)
-
-                    # print(AeqSet)
-                    # print(BeqSet)
                     # continuity
                     if m < self.num_segments-1:
                         contiDof_ = min(self.maxContiOrder[1]+1, self.num_ang_variables+1-self.segState[m, 0])
@@ -375,14 +359,11 @@ class UAVTrajGen(TrajGen):
                             print('Connecting segment ({0},{1}) : lacks {2} dof  for imposed {3} th continuity'.format(m, m+1, self.maxContiOrder[1]-contiDof_, self.maxContiOrder[1]))
                         if contiDof_ >0:
                             aeq, beq = self.contiMat(m, contiDof_-1, self.ang_order)
-                            print(aeq)
-                            print(beq)
                             AeqSet = np.concatenate((AeqSet, aeq.reshape(1, -1, self.num_ang_variables).repeat(self.dim-self.position_dim, axis=0)), axis=1)
                             BeqSet = np.concatenate((BeqSet, beq.reshape(1, -1, 1).repeat(self.dim-self.position_dim, axis=0)), axis=1)
-            print(AeqSet.shape)
-            print(BeqSet.shape)
         else:
             print("ERROR: please use 'pos' or 'ang'")
+
         return QSet, ASet, BSet, AeqSet, BeqSet
 
     def mapQP(self, QSet_, ASet_, BSet_, AeqSet_, BeqSet_):
@@ -449,7 +430,6 @@ class UAVTrajGen(TrajGen):
 
         # # get original QP
         QSet_pos, ASet_pos, BSet_pos, AeqSet_pos, BeqSet_pos = self.getQPset('pos')
-        # print(self.pinSet)
 
 
         mapMat = self.coeff2endDerivatives(AeqSet_pos[0])
@@ -473,22 +453,17 @@ class UAVTrajGen(TrajGen):
                 P_ = np.dot(self.scaleMatBigInv('pos'), Phat_)
                 self.pos_polyCoeffSet[dd] = P_.reshape(-1, self.pos_order+1).T
 
-        print('get QP for the yaw Sangle')
         QSet_ang, _, _, AeqSet_ang, BeqSet_ang= self.getQPset('ang')
+
         for dd in range(self.dim- self.position_dim):
-            print(QSet_ang[dd])
-            print(AeqSet_ang[dd])
-            print(BeqSet_ang[dd])
-            print(np.zeros((QSet_ang[dd].shape[0])))
             result = solve_qp(P=QSet_ang[dd], q=np.zeros((QSet_ang[dd].shape[0])), A=AeqSet_ang[dd], b=BeqSet_ang[dd], solver='cvxopt')
             Phat_ = result
             if Phat_ is not None:
-                # ang_flag = True
+                ang_flag = True
                 P_ = np.dot(self.scaleMatBigInv('ang'), Phat_)
                 self.ang_polyCoeffSet[dd] = P_.reshape(-1, self.ang_order+1).T
             else:
-                # ang_flag = False
-                self.isSolved = False
+                ang_flag = False
 
     def eval(self, t_, d_):
         val_pos = np.zeros((self.position_dim, t_.shape[0]))
@@ -602,4 +577,4 @@ class UAVTrajGen(TrajGen):
             ani.save('./uav.gif', writer='imagemagick', fps=100)
         if saveMP4:
             ani.save('./uav.mp4', writer='imagemagick', fps=30)
-        # plt.show()
+        plt.show()

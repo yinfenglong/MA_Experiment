@@ -156,10 +156,10 @@ int quadrotor_acados_sim_create(sim_solver_capsule * capsule)
     // initialize parameters to nominal value
     double p[4];
     
-    p[0] = 2.477;
-    p[1] = 0.47;
-    p[2] = 2.477;
-    p[3] = 0.47;
+    p[0] = 0.93;
+    p[1] = 0.137;
+    p[2] = 0.968;
+    p[3] = 0.138;
     capsule->sim_forw_vde_casadi[0].set_param(capsule->sim_forw_vde_casadi, p);
     capsule->sim_expl_ode_fun_casadi[0].set_param(capsule->sim_expl_ode_fun_casadi, p);
     

@@ -2,7 +2,7 @@
  * @Author: Wei Luo
  * @Date: 2021-03-21 21:07:20
  * @LastEditors: Wei Luo
- * @LastEditTime: 2021-06-07 13:08:42
+ * @LastEditTime: 2021-08-14 23:16:04
  * @Note: Basic PID controller
  */
 
@@ -70,7 +70,7 @@ void PIDController::landing()
     pose_error(2) = initial_pose_.pose.position.z - current_pose_.pose.position.z;
 
     delta_error = pose_error - last_position_error_;
-    vec_cmd = 0.35 * pose_error + delta_error * 0.001;
+    vec_cmd = 0.45 * pose_error + delta_error * 0.001;
 
     msg.header.stamp = ros::Time::now();
     msg.type_mask = 0b100111000111;
@@ -104,9 +104,18 @@ void PIDController::takeoff_target()
 bool PIDController::is_initialized()
 {
     if (is_robot_client_connected_ && is_current_pose_sub_)
+    {
+        ROS_INFO_ONCE("PID controller is initialized");
         return true;
+    }
     else
-        return false;
+    {
+        // if (!is_current_pose_sub_)
+        //     ROS_INFO("No Robot Pose");
+        // if (!is_robot_client_connected_)
+        //     ROS_INFO("No robot connected");
+    }
+    return false;
 }
 
 /* callback functions */

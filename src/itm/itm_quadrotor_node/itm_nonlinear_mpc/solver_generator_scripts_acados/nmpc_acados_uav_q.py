@@ -4,7 +4,7 @@
 Author: Wei Luo
 Date: 2021-06-01 11:46:48
 LastEditors: Wei Luo
-LastEditTime: 2021-06-01 12:23:06
+LastEditTime: 2021-06-25 11:04:44
 Note: Note
 '''
 
@@ -66,10 +66,10 @@ def export_uav_q_model():
     model.name = 'quadrotor_q'
 
     constraints = ca.types.SimpleNamespace()
-    constraints.roll_rate_min = -6.0
-    constraints.roll_rate_max = 6.0
-    constraints.pitch_rate_min = -6.0
-    constraints.pitch_rate_max = 6.0
+    constraints.roll_rate_min = -10.0
+    constraints.roll_rate_max = 10.0
+    constraints.pitch_rate_min = -10.0
+    constraints.pitch_rate_max = 10.0
     constraints.yaw_rate_min = -3.14
     constraints.yaw_rate_max = 3.14
     constraints.thrust_min = 2.0

@@ -18,6 +18,7 @@ find_package(catkin REQUIRED COMPONENTS
   roscpp
   rospy
   tf
+  tf2
   dynamic_reconfigure
   message_generation
   mav_msgs
@@ -328,42 +329,24 @@ target_link_libraries(ocp_q_shared_lib acados hpipm blasfeo)
 add_library(sim_q_shared_lib SHARED ${sim_q_solver} ${casadi_q_fun})
 target_link_libraries(sim_q_shared_lib acados hpipm blasfeo)
 
-add_executable(mpc_q_controller
-  src/controller/mpc_acados/mpc_q_acados.cpp
+add_executable(mpc_q_complex_controller
+  src/controller/mpc_acados/mpc_q_acados_complex.cpp
 )
-target_link_libraries(mpc_q_controller
+target_link_libraries(mpc_q_complex_controller
   ocp_q_shared_lib
   sim_q_shared_lib
   ${catkin_LIBRARIES}
 )
 
-file(GLOB ocp_solver
-        solver_acados/uav/acados_solver_quadrotor.c
+add_executable(mpc_q_controller_safe
+  src/controller/mpc_acados/mpc_q_acados_safetakeoff.cpp
 )
-
-file(GLOB casadi_fun
-        solver_acados/uav/quadrotor_model/quadrotor_expl_ode_fun.c
-        solver_acados/uav/quadrotor_model/quadrotor_expl_vde_forw.c
-)
-
-file(GLOB sim_solver
-        .solver_acados/uav/acados_sim_solver_quadrotor.c
-)
-
-add_library(ocp_shared_lib SHARED ${ocp_solver} ${casadi_fun} )
-target_link_libraries(ocp_shared_lib acados hpipm blasfeo)
-
-add_library(sim_shared_lib SHARED ${sim_solver} ${casadi_fun})
-target_link_libraries(sim_shared_lib acados hpipm blasfeo)
-
-add_executable(mpc_controller
-  src/controller/mpc_acados/mpc_acados.cpp
-)
-target_link_libraries(mpc_controller
-  ocp_shared_lib
-  sim_shared_lib
+target_link_libraries(mpc_q_controller_safe
+  ocp_q_shared_lib
+  sim_q_shared_lib
   ${catkin_LIBRARIES}
 )
+
 
 add_executable(px4_controller src/node/px4_controller.cpp)
 target_link_libraries(px4_controller

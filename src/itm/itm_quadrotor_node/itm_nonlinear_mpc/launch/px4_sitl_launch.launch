@@ -15,12 +15,14 @@
   <!-- This is to identify the path of the Firmware in your machine  -->
   <arg name="px4_path" default="/home/itm_stud/PX4-Autopilot/Tools/sitl_gazebo" />
   <arg name="world_file" default="itm_s500.world" />
-
+  <arg name="mobile_robot_x" default="5.0"/>
+  <arg name="mobile_robot_y" default="4.0"/>
 
   <!-- <env name="GAZEBO_MODEL_PATH" value="${GAZEBO_MODEL_PATH}:$(find rotors_gazebo)/models:$(arg px4_path)/models"/> -->
   <!-- <env name="GAZEBO_RESOURCE_PATH" value="${GAZEBO_RESOURCE_PATH}:$(find rotors_gazebo)/models:$(arg px4_path)/models"/> -->
   <include file="$(find gazebo_ros)/launch/empty_world.launch">
-    <arg name="world_name" value="$(arg px4_path)/worlds/$(arg world_file)"/>
+    <!-- <arg name="world_name" value="$(arg px4_path)/worlds/$(arg world_file)"/> -->
+    <arg name="world_name" value="$(find itm_quadrotor_description)/worlds/$(arg world_file)"/>
     <arg name="debug" value="$(arg debug)" />
     <arg name="paused" value="$(arg paused)" />
     <arg name="gui" value="$(arg gui)" />
@@ -33,14 +35,15 @@
   </group> -->
   <!-- <group if="$(arg inc_summit)">
     <include file="$(find summit_xl_description)/launch/mav_coop.launch">
-        <arg name="x_pos" value="5.0"/> 
-        <arg name="y_pos" value="4.0"/>
+        <arg name="x_pos" value="$(arg mobile_robot_x)"/>
+        <arg name="y_pos" value="$(arg mobile_robot_y)"/>
     </include>
-  </group> --> -->
+  </group> -->
 
 
 
    <include file="$(find mavros)/launch/node.launch">
+  <!-- <node name="mavros" pkg="mavros" type="mavros_node" output="screen"> -->
     <arg name="pluginlists_yaml" value="$(find mavros)/launch/px4_pluginlists.yaml" />
     <arg name="config_yaml" value="$(find mavros)/launch/px4_config.yaml" />
     <arg name="fcu_url" value="udp://:14540@127.0.0.1:14557" />
@@ -49,6 +52,15 @@
     <arg name="tgt_component" value="1" />
     <arg name="fcu_protocol" value="v2.0" />
 
+    <!--rosparam command="load" file="$(find mavros)/launch/px4_blacklist.yaml"-->
+
+    <!-- enable heartbeat send and reduce timeout -->
+    <!-- <arg name="conn_heartbeat" value="5.0" />
+    <arg name="conn_timeout" value="5.0" />
+    <arg name="mocap/use_tf" value="false"/>
+    <arg name="mocap/use_pose" value="pose"/>
+    <remap from="/mavros/mocap/tf" to="/robot_pose"/> -->
+  <!-- </node> -->
   </include>
 
 </launch>

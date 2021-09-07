@@ -4,7 +4,7 @@
 Author: Wei Luo
 Date: 2021-06-01 11:47:52
 LastEditors: Wei Luo
-LastEditTime: 2021-06-02 11:58:42
+LastEditTime: 2021-07-14 10:09:07
 Note: Note
 '''
 
@@ -39,7 +39,8 @@ ny = nx + nu
 # additional parameters
 n_params = model.p.size()[0] if isinstance(model.p, ca.SX) else 0
 ocp.dims.np = n_params
-ocp.parameter_values = np.array([2.477, 0.47, 2.477, 0.47])
+# ocp.parameter_values = np.array([2.477, 0.47, 2.477, 0.47])
+ocp.parameter_values = np.array([0.930, 0.137, 0.968, 0.138])
 # ocp.parameter_values = np.array([0.85, 0.2, 0.86, 0.3])
 # cost function
 # Q_m = np.diag([20,  # x

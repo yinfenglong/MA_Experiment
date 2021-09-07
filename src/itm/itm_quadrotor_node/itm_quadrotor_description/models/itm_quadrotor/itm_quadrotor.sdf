@@ -1,0 +1,120 @@
+<sdf version='1.6'>
+  <model name='itm_quadrotor'>
+
+    <include>
+      <uri>model://itm_quadrotor_base</uri>
+    </include>
+
+    <!-- <include>
+      <uri>model://eco_cam</uri>
+      <pose>0.12 0 -0.045 0 1.57 0</pose>
+    </include>
+    <joint name="eco_cam_joint" type="fixed">
+      <child>eco_cam::link</child>
+      <parent>itm_quadrotor_base::base_link</parent>
+      <axis>
+        <xyz>0 0 1</xyz>
+        <limit>
+          <upper>0</upper>
+          <lower>0</lower>
+        </limit>
+      </axis>
+    </joint> -->
+
+    <!-- add ground truth  -->
+
+    <plugin name="p3d_base_controller" filename="libgazebo_ros_p3d.so">
+        <alwaysOn>true</alwaysOn>
+        <updateRate>200.0</updateRate>
+        <bodyName>itm_quadrotor_base::base_link</bodyName>
+        <topicName>/robot_pose</topicName>
+        <gaussianNoise>0.01</gaussianNoise>
+        <frameName>map</frameName>
+        <xyzOffsets>0 0 0</xyzOffsets>
+        <rpyOffsets>0 0 0</rpyOffsets>
+    </plugin>
+
+<!-- add wind -->
+ <!-- <plugin name='wind_plugin' filename='libgazebo_wind_plugin.so'>
+      <robotNamespace>itm_quadrotor</robotNamespace>
+      <frameId>base_link</frameId>
+      <linkName>itm_quadrotor_base::base_link</linkName>
+     <windPubTopic>wind</windPubTopic>
+      <xyzOffset>0 0 0</xyzOffset>
+      <windDirection>1 0 0</windDirection>
+      <windForceMean>0</windForceMean>
+      <windGustDirection>1 0 0</windGustDirection>
+       <windGustStart>0</windGustStart>
+      <windGustDuration>2000</windGustDuration>
+       <windGustForceVariance>0.5</windGustForceVariance>
+      <windGustForceMean>1</windGustForceMean>
+    </plugin> -->
+    <!-- add wind -->
+
+
+     <!-- <link name='on_board_light'>
+    <light type="spot" name="light_source">
+      <pose>0 0 0 0 0 0</pose>
+      <diffuse>0 1 0 1</diffuse>
+      <specular>.2 .2 .2 1</specular>
+      <attenuation>
+        <range>10</range>
+        <linear>0.01</linear>
+        <constant>0.2</constant>
+        <quadratic>0.0</quadratic>
+      </attenuation>
+      <direction>1 0 0</direction>
+      <spot>
+        <inner_angle>0.1</inner_angle>
+        <outer_angle>0.5</outer_angle>
+        <falloff>1.2</falloff>
+      </spot>
+      <cast_shadows>false</cast_shadows>
+    </light>
+    <self_collide>0</self_collide>
+    <kinematic>0</kinematic>
+    </link>
+
+    <plugin name='light_control' filename='libAttachLightPlugin.so'>
+      <link>
+          <link_name>itm_quadrotor_base::light_link</link_name>
+          <light>
+          <id>on_board_light/light_source</id>
+            <pose>0 0 0. 0 0 0</pose>
+
+          </light>
+        </link>
+    </plugin>
+
+    <joint name='light_joint' type="fixed">
+      <child>itm_quadrotor_base::light_link</child>
+      <parent>base_link</parent>
+    </joint>-->
+
+
+    <!-- <link name='on_board_light'>
+      <pose>0.0 0 -0.00 0 -1.57 0</pose>
+      <light name='light_source' type='spot'>
+      </light>
+      <inertial>
+      <mass>0.0001</mass>
+      </inertial>
+       <self_collide>0</self_collide>
+    <kinematic>0</kinematic>
+        </link>
+
+    <joint name='light_joint' type="fixed">
+      <child>on_board_light</child>
+      <parent>itm_quadrotor_base::base_link</parent>
+    </joint>
+
+    <plugin name='light_control' filename='libAttachLightPlugin.so'>
+      <enable>true</enable>
+      <light>
+        <id>on_board_light/light_source</id>
+        <duration>0.5</duration>
+        <interval>0.5</interval>
+      </light>
+    </plugin> -->
+  </model>
+</sdf>

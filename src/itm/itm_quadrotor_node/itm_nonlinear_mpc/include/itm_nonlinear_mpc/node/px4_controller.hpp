@@ -4,7 +4,7 @@
  * @Author: Wei Luo
  * @Date: 2021-03-14 23:40:44
  * @LastEditors: Wei Luo
- * @LastEditTime: 2021-05-27 21:56:38
+ * @LastEditTime: 2021-08-27 15:38:01
  * @Note: Note
  */
 #include <ros/ros.h>
@@ -47,6 +47,16 @@ geometry_msgs::PoseStamped command_pose;
 ros::Publisher robot_command;
 bool is_only_sim;
 
+// for normal landing
+double dh_landing;     // decision height of the landing
+bool is_ready_landing; // achieve some landing states, one can turn off the offboard controller connection in 5 seconds
+
+// for landing platform
+double landing_min;
+bool has_landing_platform;
+Eigen::Vector3d lp_pose;
+Eigen::Vector3d landing_pose_error;
+
 // for emergency landing
 geometry_msgs::PoseStamped landing_target;
 bool got_landing_target;
@@ -78,7 +88,6 @@ void mavros_state_cb(const mavros_msgs::State::ConstPtr &msg)
     if (mavros_state.system_status != msg->system_status)
     {
     }
-
     mavros_state = *msg;
 } // mavros_state_cb
 
@@ -92,8 +101,6 @@ void current_pos_callback(const geometry_msgs::PoseStamped::ConstPtr &msg)
         ROS_INFO("Inertial Position is %f, %f, %f", msg->pose.position.x,
                  msg->pose.position.y, msg->pose.position.z);
     }
-    // ROS_INFO("Inertial Piiiosition is %f, %f, %f", msg->pose.position.x,
-    //          msg->pose.position.y, msg->pose.position.z);
     current_pos = *msg;
 
     ROS_INFO_ONCE("mpc_current_pos_flag is true");
@@ -123,6 +130,61 @@ void current_odom_callback(const nav_msgs::Odometry::ConstPtr &msg)
     current_pos.pose.orientation.y = msg->pose.pose.orientation.y;
     current_pos.pose.orientation.z = msg->pose.pose.orientation.z;
     current_pos.pose.orientation.w = msg->pose.pose.orientation.w;
+}
+
+void quaternion_to_rpy(Eigen::Quaterniond q, Eigen::Vector3d &rpy)
+{
+    auto q0 = q.w();
+    auto q1 = q.x();
+    auto q2 = q.y();
+    auto q3 = q.z();
+
+    rpy(0) = std::atan2(2 * (q0 * q1 + q2 * q3), 1 - 2 * (std::pow(q1, 2) + std::pow(q2, 2)));
+    rpy(1) = std::asin(2 * (q0 * q2 - q3 * q1));
+    rpy(2) = std::atan2(2 * (q0 * q3 + q1 * q2), 1 - 2 * (std::pow(q2, 2) + std::pow(q3, 2)));
+}
+
+void landing_pose_callback(const geometry_msgs::PoseStamped::ConstPtr &msg)
+{
+    // x, y, yaw
+    lp_pose.x() = msg->pose.position.x;
+    lp_pose.y() = msg->pose.position.y;
+    Eigen::Quaterniond quat_;
+    quat_.w() = msg->pose.orientation.w;
+    quat_.x() = msg->pose.orientation.x;
+    quat_.y() = msg->pose.orientation.y;
+    quat_.z() = msg->pose.orientation.z;
+    Eigen::Vector3d pose_;
+    quaternion_to_rpy(quat_, pose_);
+    lp_pose.z() = pose_.z();
+
+    if (current_pos_flag)
+    {
+        landing_pose_error.x() = lp_pose.x() - current_pos.pose.position.x;
+        landing_pose_error.y() = lp_pose.y() - current_pos.pose.position.y;
+        landing_pose_error.z() = 0.0; // TODO:: yaw error are ignored
+    }
+}
+
+void landing_odom_callback(const nav_msgs::Odometry::ConstPtr &msg)
+{
+    // x, y, yaw
+    lp_pose.x() = msg->pose.pose.position.x;
+    lp_pose.y() = msg->pose.pose.position.y;
+    Eigen::Quaterniond quat_;
+    quat_.w() = msg->pose.pose.orientation.w;
+    quat_.x() = msg->pose.pose.orientation.x;
+    quat_.y() = msg->pose.pose.orientation.y;
+    quat_.z() = msg->pose.pose.orientation.z;
+    Eigen::Vector3d pose_;
+    quaternion_to_rpy(quat_, pose_);
+    lp_pose.z() = pose_.z();
+    if (current_pos_flag)
+    {
+        landing_pose_error.x() = lp_pose.x() - current_pos.pose.position.x;
+        landing_pose_error.y() = lp_pose.y() - current_pos.pose.position.y;
+        landing_pose_error.z() = 0.0; // TODO:: yaw error are ignored
+    }
 }
 
 void user_command_callback(const itm_mav_msgs::SetMission::ConstPtr &msg)

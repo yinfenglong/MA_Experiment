@@ -29,4 +29,4 @@ tags
 itm_nonlinear_mpc/scripts/acados/__pycache__
 itm_nonlinear_mpc/solver_generator_scripts_acados/__pycache__/*
 itm_nonlinear_mpc/scripts/non_ros_acado/external_packages/qpOASES-3.2.0/interfaces/python/tests/__pycache__/
-
+magnet_control/scripts/__pycache__/

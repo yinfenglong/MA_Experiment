@@ -1060,10 +1060,10 @@
         "name": "quadrotor"
     },
     "parameter_values": [
-        2.477,
-        0.47,
-        2.477,
-        0.47
+        0.93,
+        0.137,
+        0.968,
+        0.138
     ],
     "problem_class": "OCP",
     "simulink_opts": {

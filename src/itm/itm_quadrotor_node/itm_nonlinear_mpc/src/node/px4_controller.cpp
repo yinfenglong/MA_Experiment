@@ -1,10 +1,8 @@
-
-
 /*
  * @Author: Wei Luo
  * @Date: 2021-03-14 23:23:46
  * @LastEditors: Wei Luo
- * @LastEditTime: 2021-06-04 17:19:22
+ * @LastEditTime: 2021-08-27 15:36:51
  * @Note: To control an experiment/simulation quadrotor with different
  *      controllers.
  */
@@ -12,10 +10,50 @@
 // include header files
 #include <itm_nonlinear_mpc/node/px4_controller.hpp>
 
-void normal_landing(double dt)
+void normal_landing(double dt, double decision_height)
 {
     ROS_INFO_ONCE("Start Landing at current position");
-    if (abs(current_pos.pose.position.z - initial_pos.pose.position.z) <= 0.08)
+    bool ready_for_landing_ = false;
+
+    // judge of the landing shutdown condition
+    if (has_landing_platform)
+    {
+        if (landing_pose_error.norm() < 0.2)
+        {
+            std::cout << landing_pose_error << std::endl;
+            ROS_INFO_ONCE("Landing within 0.2 m range");
+            // land on the platform
+            if (current_pos.pose.position.z <= decision_height + landing_min)
+                ready_for_landing_ = true;
+        }
+        else
+        {
+            ROS_INFO_ONCE("UAV dose not get close enough to the landing platform, lands on the ground.");
+            // land on the ground
+            if (initial_pos.pose.position.z < landing_min)
+            {
+                // takeoff from ground (but one should make sure all robot are lower than landing platform in the initial position)
+                if (current_pos.pose.position.z < decision_height)
+                    ready_for_landing_ = true;
+            }
+            else
+            {
+                // takeoff from the landing platform
+                if (current_pos.pose.position.z < landing_min)
+                    ready_for_landing_ = true;
+            }
+        }
+    }
+    else
+    {
+        if (current_pos.pose.position.z <= decision_height)
+        {
+            ready_for_landing_ = true;
+            ROS_INFO_ONCE("below decision height, ready for shuting down");
+        }
+    }
+
+    if (ready_for_landing_)
     {
         offboard_set_mode.request.custom_mode = "MANUAL";
         if (set_mode_client.call(offboard_set_mode) && offboard_set_mode.response.mode_sent)
@@ -23,7 +61,7 @@ void normal_landing(double dt)
             ROS_INFO_ONCE("Landing detected and set to landing");
         }
 
-        else if (mavros_state.mode == "AUTO.RTL" || mavros_state.mode == "AUTO.LOITER")
+        if (mavros_state.mode == "AUTO.RTL" || mavros_state.mode == "AUTO.LOITER")
         {
             offboard_set_mode.request.custom_mode = "MANUAL";
             if (set_mode_client.call(offboard_set_mode) && offboard_set_mode.response.mode_sent)
@@ -33,6 +71,11 @@ void normal_landing(double dt)
         }
         else if (mavros_state.mode == "MANUAL" || mavros_state.mode == "AUTO.RTL" || mavros_state.mode == "AUTO.LOITER")
         {
+            if (!is_ready_landing)
+            {
+                is_ready_landing = true;
+                ROS_INFO_ONCE("One can shutdown the Offboard mode");
+            }
             if (mavros_state.armed)
             {
                 arm_cmd.request.value = false;
@@ -114,8 +157,11 @@ void emergency_landing()
         ROS_INFO_STREAM("landing target" << landing_target);
     }
     landing_command(landing_target);
-    if (abs(current_pos.pose.position.z - initial_pos.pose.position.z) <= 0.05)
+    if (current_pos.pose.position.z - initial_pos.pose.position.z <= 0.12) // may be we don't need to use abs()
     {
+        // ?: should I put the 'ready' code here
+        if (!is_ready_landing)
+            is_ready_landing = true;
         offboard_set_mode.request.custom_mode = "MANUAL";
         if (set_mode_client.call(offboard_set_mode) && offboard_set_mode.response.mode_sent)
         {
@@ -186,6 +232,8 @@ int main(int argc, char **argv)
     current_pos_flag = false;
     is_controller_working = false;
     is_only_sim = true;
+    is_ready_landing = false;
+    landing_pose_error << 1e3, 1e3, 1e3;
 
     /* get some parameters */
     private_nh_node.getParam("sim_only", is_only_sim);
@@ -198,15 +246,44 @@ int main(int argc, char **argv)
     {
         got_fence = false;
     }
+    if (private_nh_node.hasParam("decision_height"))
+    {
+        private_nh_node.getParam("decision_height", dh_landing);
+    }
+    else
+    {
+        dh_landing = 0.1; // default decision height for quadrotor landing
+    }
+    if (private_nh_node.hasParam("landing_platform_height"))
+    {
+        // additional height for landing
+        private_nh_node.getParam("landing_platform_height", landing_min);
+        has_landing_platform = true;
+        ROS_INFO("Got Landing Platform");
+    }
+    else
+    {
+        landing_min = 0.0;
+        has_landing_platform = false;
+    }
 
     /*Subscribers*/
     ros::Subscriber state_sub = nh_node.subscribe<mavros_msgs::State>("/mavros/state", 10, mavros_state_cb);
     ros::Subscriber user_command_sub = nh_node.subscribe<itm_mav_msgs::SetMission>("itm_quadrotor_control/user_command", 10, user_command_callback);
+
     ros::Subscriber uav_state_sub_;
     if (is_only_sim)
         uav_state_sub_ = nh_node.subscribe<nav_msgs::Odometry>("/real_pose", 10, current_odom_callback);
     else
         uav_state_sub_ = nh_node.subscribe<geometry_msgs::PoseStamped>("/real_pose", 10, current_pos_callback);
+    ros::Subscriber landing_platform_sub;
+    if (has_landing_platform)
+    {
+        if (is_only_sim)
+            landing_platform_sub = nh_node.subscribe<nav_msgs::Odometry>("/landing_pf_pose", 10, landing_odom_callback);
+        else
+            landing_platform_sub = nh_node.subscribe<geometry_msgs::PoseStamped>("/landing_pf_pose", 10, landing_pose_callback);
+    }
 
     /*ServiceClient*/
     arming_client = nh_node.serviceClient<mavros_msgs::CommandBool>("/mavros/cmd/arming");
@@ -234,6 +311,7 @@ int main(int argc, char **argv)
     while (ros::ok() && (!mavros_state.connected || !current_pos_flag))
     {
         // if get state from ROS and also the localization of the quadrotor
+        ROS_INFO("mavros or pose connection need to be checked");
         ros::spinOnce();
         rate.sleep();
     }
@@ -256,8 +334,10 @@ int main(int argc, char **argv)
     {
         // check the controller state through server
         ROS_INFO("Connect to Controller Server.");
-        controller_state.request.robot_name = "ITM_Q250";
         controller_state.request.command_id = 0;
+        // TODO: currently there is no difference with different robot name
+        // later one may specify different parameter settings for the quadrotor according its type
+        controller_state.request.robot_name = "ITM_Q250";
         get_controller_state.call(controller_state);
         ros::spinOnce();
         rate.sleep();
@@ -272,88 +352,12 @@ int main(int argc, char **argv)
     last_request = ros::Time::now();
     ROS_INFO("Begin the loop");
     auto t_start = std::chrono::high_resolution_clock::now();
-    // main loop
-    // while (ros::ok())
-    // {
-    //     if (mavros_state.mode != "OFFBOARD" &&
-    //         (ros::Time::now() - last_request > ros::Duration(5.0)) &&
-    //         user_command.mission_mode != 2 && user_command.mission_mode != 4)
-    //     {
-    //         if (set_mode_client.call(offboard_set_mode) &&
-    //             offboard_set_mode.response.mode_sent)
-    //         {
-    //             ROS_INFO("Offboard enabled");
-    //         }
-    //         last_request = ros::Time::now();
-    //     }
-    //     else
-    //     {
-    //         if (!mavros_state.armed &&
-    //             (ros::Time::now() - last_request > ros::Duration(5.0)) &&
-    //             user_command.mission_mode != 2 && user_command.mission_mode != 4)
-    //         {
-    //             if (arming_client.call(arm_cmd) &&
-    //                 arm_cmd.response.success)
-    //             {
-    //                 ROS_INFO_ONCE("Vehicle armed");
-    //             }
-    //             else
-    //             {
-    //                 ROS_INFO("cannot arm");
-    //             }
-    //             last_request = ros::Time::now();
-    //         }
-    //     }
-
-    //     // once the vehicle is ready to fly
-    //     if (mavros_state.armed)
-    //     {
-    //         controller_state.request.command_id = user_command.mission_mode;
-    //         get_controller_state.call(controller_state);
-    //         if (!controller_state.response.connected)
-    //         {
-    //             // controller no response
-    //             is_controller_working = false;
-    //         }
-    //         ROS_INFO_ONCE("Begin the Mission");
-    //     }
-
-    //     if (user_command.mission_mode == 2)
-    //     {
-    //         auto t_end = std::chrono::high_resolution_clock::now();
-    //         double elapsed_time_ms = std::chrono::duration<double, std::milli>(t_end - t_start).count();
-    //         normal_landing(elapsed_time_ms / 1000.0);
-    //         t_start = std::chrono::high_resolution_clock::now();
-    //     }
-    //     else if (user_command.mission_mode == 4 || !is_controller_working)
-    //     {
-    //         emergency_landing();
-    //     }
-
-    //     if (got_fence)
-    //     {
-    //         // safety checks
-    //         if (!safety_fence_check(0))
-    //         {
-    //             emergency_landing();
-    //             user_command.mission_mode = 4;
-    //             // publish user command mode to tell controller to stop publish control commands
-    //             itm_mav_msgs::SetMission set_mission_mode;
-    //             set_mission_mode.mission_mode = 4;
-    //             flight_mission_mode_pub_.publish(set_mission_mode);
-    //         }
-    //     }
-
-    //     // last_user_command = user_command;
-    //     ros::spinOnce();
-    //     rate.sleep();
-    // }
 
     while (ros::ok())
     {
         if (mavros_state.mode != "OFFBOARD" &&
             (ros::Time::now() - last_request > ros::Duration(5.0)) &&
-            (user_command.mission_mode != 2) && (user_command.mission_mode != 4))
+            (user_command.mission_mode != 4) && !is_ready_landing) // (user_command.mission_mode != 2) &&
         {
             if (set_mode_client.call(offboard_set_mode) &&
                 offboard_set_mode.response.mode_sent)
@@ -365,7 +369,7 @@ int main(int argc, char **argv)
         else
         {
             if (!mavros_state.armed &&
-                (ros::Time::now() - last_request > ros::Duration(5.0)) && (user_command.mission_mode != 2) && (user_command.mission_mode != 4))
+                (ros::Time::now() - last_request > ros::Duration(5.0)) && (user_command.mission_mode != 4) && !is_ready_landing) // (user_command.mission_mode != 2) &&
             {
                 if (arming_client.call(arm_cmd) &&
                     arm_cmd.response.success)
@@ -380,7 +384,7 @@ int main(int argc, char **argv)
         get_controller_state.call(controller_state);
         if (!controller_state.response.connected)
         {
-            // controller no response
+            // ! controller no response
             is_controller_working = false;
             ROS_ERROR("Controller is lost");
         }
@@ -389,11 +393,12 @@ int main(int argc, char **argv)
         {
             auto t_end = std::chrono::high_resolution_clock::now();
             double elapsed_time_ms = std::chrono::duration<double, std::milli>(t_end - t_start).count();
-            normal_landing(elapsed_time_ms / 1000.0);
+            normal_landing(elapsed_time_ms / 1000.0, dh_landing); // currently normal landing do not send control command directly.
             t_start = std::chrono::high_resolution_clock::now();
         }
         else if (user_command.mission_mode == 4 || !is_controller_working)
         {
+            // ! emergency case
             emergency_landing();
         }
 
