@@ -64,7 +64,7 @@ if __name__ == '__main__':
     uav_odom_sub_ = rospy.Subscriber(
         '/robot_pose', Odometry, uav_odom_callback)
     uav_pose_sub_ = rospy.Subscriber(
-        '/vrpn_client_node/ITM_Q300/pose', PoseStamped, uav_pose_callback)
+        '/vrpn_client_node/ITM_Q330/pose', PoseStamped, uav_pose_callback)
     landing_target_pose_sub_ = rospy.Subscriber(
         '/vrpn_client_node/l_hera/pose', PoseStamped, mobilerobot_pose_callback)
     landing_target_odom_sub_ = rospy.Subscriber(

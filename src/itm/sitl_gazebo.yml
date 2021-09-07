@@ -71,6 +71,9 @@ windows:
       # root: ~/achilles/test_ma_ws
       layout: main-vertical
       panes:
+        - rosbag:
+          - source ros.zsh
+          - cd src/itm/itm_quadrotor_node/bagfiles/gazebo
         - trajectory_publish:
           - source ros.zsh
         - trajectory_cmd:

@@ -25,7 +25,7 @@ class TrajectoryGenerator(object):
         self.robot_odom_sub_ = rospy.Subscriber(
             '/robot_pose', Odometry, self.robot_odom_callback)
         self.robot_pose_sub_ = rospy.Subscriber(
-            '/vrpn_client_node/ITM_Q250/pose', PoseStamped, self.robot_pose_callback)
+            '/vrpn_client_node/ITM_Q330/pose', PoseStamped, self.robot_pose_callback)
         self.trajectory_pub = rospy.Publisher(
             '/robot_trajectory', itm_trajectory_msg, queue_size=50)
         self.publish_rate = publish_rate

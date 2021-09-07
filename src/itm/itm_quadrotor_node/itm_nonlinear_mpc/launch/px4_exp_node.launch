@@ -71,10 +71,10 @@
 
     <!-- hardware experiment -->
     <group unless="$(arg is_simulation)">
-        <arg name="robot_loc_pose" default="/vrpn_client_node/ITM_Q300/pose" />
+        <!-- <arg name="robot_loc_pose" default="/vrpn_client_node/ITM_Q300/pose" /> -->
         <arg name="landing_target_topic" default="/vrpn_client_node/l_hera/pose"/>
         <!-- <arg name="robot_loc_pose" default="/vrpn_client_node/ITM_Q250/pose" /> -->
-        <!-- <arg name="robot_loc_pose" default="/vrpn_client_node/ITM_Q330/pose" /> -->
+        <arg name="robot_loc_pose" default="/vrpn_client_node/ITM_Q330/pose" />
 
         <!-- <node name="pid_controller" pkg="itm_nonlinear_mpc" type="pid_controller" respawn="false" clear_params="true" output="screen" >
             <remap from="/real_pose" to="$(arg robot_loc_pose)" />
@@ -115,7 +115,7 @@
             <param name="publish_path" value="true" />
             <param name="publish_markers" value="true" />
             <remap from="/uav_odom" to="/robot_pose" />
-            <remap from="/uav_pose" to="/vrpn_client_node/ITM_Q300/pose" />
+            <remap from="/uav_pose" to="/vrpn_client_node/ITM_Q330/pose" />
             <remap from="/desired_trajectory" to="/robot_trajectory" />
         </node>
     </group>
@@ -131,15 +131,15 @@
             <param name="sim_only" value="$(arg is_simulation)" />
             <param name="decision_height" value="$(arg decision_height)" />
             <!-- landing platform -->
-            <param name="landing_platform_height" value="0.5" />
-            <remap from="/landing_pf_pose" to="/robotnik_base_control/odom" />
+            <!-- <param name="landing_platform_height" value="0.5" />
+            <remap from="/landing_pf_pose" to="/robotnik_base_control/odom" /> -->
             <!--safe zoon defenitoin x_min, x_max, y_min, y_max, z_max-->
             <!-- <rosparam param="fence_def">[-1.0, 1.0, -1.0, 1.0, 2.2]</rosparam> -->
             <!-- <rosparam param="fence_def">[-0.8, 0.8, -0.8, 0.7, 0.7]</rosparam> -->
         </node>
     </group>
     <group unless="$(arg is_simulation)">
-        <arg name="robot_loc_pose" default="/vrpn_client_node/ITM_Q300/pose" />
+        <arg name="robot_loc_pose" default="/vrpn_client_node/ITM_Q330/pose" />
         <!-- <arg name="robot_loc_pose" default="/vrpn_client_node/ITM_Q250/pose" /> -->
         <node name="offboard_node" pkg="itm_nonlinear_mpc" type="px4_controller" respawn="false" clear_params="true" output="screen" launch-prefix="zsh -c 'sleep $(arg node_start_delay1); $0 $@'">
             <remap from="/real_pose" to="$(arg robot_loc_pose)" />
@@ -147,8 +147,8 @@
             <param name="sim_only" value="$(arg is_simulation)" />
             <param name="decision_height" value="$(arg decision_height)" />
             <!-- for landing platform -->
-            <param name="landing_platform_height" value="0.15" />
-            <remap from="/landing_pf_pose" to="/vrpn_client_node/l_hera/pose" />
+            <!-- <param name="landing_platform_height" value="0.15" />
+            <remap from="/landing_pf_pose" to="/vrpn_client_node/l_hera/pose" /> -->
             <!--x_min, x_max, y_min, y_max, z_max-->
             <!-- <rosparam param="fence_def">[-1.0, 1.5, -1.2, 1.6, 1.2]</rosparam> -->
             <rosparam param="fence_def">[-0.8, 0.8, -0.8, 0.7, 0.7]</rosparam>

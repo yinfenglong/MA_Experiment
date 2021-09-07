@@ -45,7 +45,7 @@ if __name__ == '__main__':
     robot_odom_sub_ = rospy.Subscriber(
         '/robot_pose', Odometry, robot_odom_callback)
     robot_pose_sub_ = rospy.Subscriber(
-        '/vrpn_client_node/ITM_Q300/pose', PoseStamped, robot_pose_callback)
+        '/vrpn_client_node/ITM_Q330/pose', PoseStamped, robot_pose_callback)
 
     # generate random trajectory: x~[-0.75,0.75], y~[-0.75,0.65], z~[0.35,0.5]
     # random_matrix_generator(x_min, x_max, y_min, y_max, z_min, z_max, size)

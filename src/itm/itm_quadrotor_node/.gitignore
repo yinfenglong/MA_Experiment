@@ -1,3 +1,5 @@
+bagfiles/gazebo
+bagfiles/Q330
 itm_nonlinear_mpc/build
 itm_nonlinear_mpc/scripts/non_ros_casadi/__pycache__
 itm_nonlinear_mpc/.DS_Store
