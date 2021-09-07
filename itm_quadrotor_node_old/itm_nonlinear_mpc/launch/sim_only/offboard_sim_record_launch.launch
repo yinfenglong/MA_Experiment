@@ -1,0 +1,11 @@
+<launch>
+    <arg name="bag_path" default="/home/arnold/Develop/ROS_ws/ITM_ws/bag"/> <!-- please check/provide the available path -->
+    <arg name="time_delay" default="0.0" />
+
+    <node name="record_robot_pose" pkg="rosbag" type="record" output="screen" args="record -o $(arg bag_path)/robot_pose /robot_pose"  launch-prefix="zsh -c 'sleep $(arg time_delay); $0 $@'">
+    </node>
+
+
+
+
+</launch>

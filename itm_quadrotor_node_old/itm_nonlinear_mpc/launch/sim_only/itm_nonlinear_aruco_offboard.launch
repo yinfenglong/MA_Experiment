@@ -1,0 +1,7 @@
+<launch>
+    <node name="aruco_mpc_offboard_node" pkg="itm_nonlinear_mpc" type="aruco_mpc_offboard_node" respawn="false" clear_params="true" output="screen">
+      <remap from="/uav/ground_truth/odometry" to="/robot_pose" />
+      <remap from="aruco_pose" to="/mavros/local_position/pose_cus"/>
+      <!-- <rosparam file="$(find itm_nonlinear_mpc)/resources/itm_nonlinear_mpc_sim_sitl.yaml" /> -->
+    </node>
+</launch>

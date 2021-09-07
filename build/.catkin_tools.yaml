@@ -1,0 +1,6 @@
+devel_space: /home/itm_stud/test_ma_ws/MA_Experiment/devel
+install: false
+install_space: /home/itm_stud/test_ma_ws/MA_Experiment/install
+profile: default
+source_space: /home/itm_stud/test_ma_ws/MA_Experiment/src
+workspace: /home/itm_stud/test_ma_ws/MA_Experiment

@@ -1,0 +1,8 @@
+prefix=/home/itm_stud/test_ma_ws/MA_Experiment/install
+
+Name: magnet_control
+Description: Description of magnet_control
+Version: 0.0.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 

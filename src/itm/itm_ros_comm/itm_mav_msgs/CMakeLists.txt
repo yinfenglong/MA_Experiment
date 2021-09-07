@@ -56,6 +56,9 @@ add_message_files(
   SetMission.msg
   itm_trajectory_msg.msg
   itm_trajectory_point.msg
+  AttitudeCommand.msg
+  UavState.msg
+  PositionCommand.msg
 )
 
 ## Generate services in the 'srv' folder

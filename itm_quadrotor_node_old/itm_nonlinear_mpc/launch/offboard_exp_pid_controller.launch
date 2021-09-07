@@ -1,0 +1,6 @@
+<launch>
+    <arg name="node_start_delay1" default="2.0" />
+    <node name="offboard_node" pkg="itm_nonlinear_mpc" type="offboard_sim_node.py" respawn="false" clear_params="true" output="screen" launch-prefix="zsh -c 'sleep $(arg node_start_delay1); $0 $@'">
+        <param name="controller" value="pid"/>
+    </node>
+</launch>

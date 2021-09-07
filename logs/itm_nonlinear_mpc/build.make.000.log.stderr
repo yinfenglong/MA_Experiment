@@ -1,0 +1,61 @@
+[01m[Kcc1:[m[K [01;35m[Kwarning: [m[Kcommand line option ‘[01m[K-std=c++11[m[K’ is valid for C++/ObjC++ but not for C
+[01m[Kcc1:[m[K [01;35m[Kwarning: [m[Kcommand line option ‘[01m[K-std=c++11[m[K’ is valid for C++/ObjC++ but not for C
+[01m[Kcc1:[m[K [01;35m[Kwarning: [m[Kcommand line option ‘[01m[K-std=c++11[m[K’ is valid for C++/ObjC++ but not for C
+[01m[Kcc1:[m[K [01;35m[Kwarning: [m[Kcommand line option ‘[01m[K-std=c++11[m[K’ is valid for C++/ObjC++ but not for C
+[01m[Kcc1:[m[K [01;35m[Kwarning: [m[Kcommand line option ‘[01m[K-std=c++11[m[K’ is valid for C++/ObjC++ but not for C
+[01m[K/home/itm_stud/test_ma_ws/MA_Experiment/src/itm/itm_quadrotor_node/itm_nonlinear_mpc/solver_acados/uav_q/acados_solver_quadrotor_q.c:[m[K In function ‘[01m[Kquadrotor_q_acados_create[m[K’:
+[01m[K/home/itm_stud/test_ma_ws/MA_Experiment/src/itm/itm_quadrotor_node/itm_nonlinear_mpc/solver_acados/uav_q/acados_solver_quadrotor_q.c:647:9:[m[K [01;35m[Kwarning: [m[Kunused variable ‘[01m[Kext_cost_num_hess[m[K’ [[01;35m[K-Wunused-variable[m[K]
+     int [01;35m[Kext_cost_num_hess[m[K = 0;
+         [01;35m[K^~~~~~~~~~~~~~~~~[m[K
+[01m[Kcc1:[m[K [01;35m[Kwarning: [m[Kcommand line option ‘[01m[K-std=c++11[m[K’ is valid for C++/ObjC++ but not for C
+[01m[K/home/itm_stud/test_ma_ws/MA_Experiment/src/itm/itm_quadrotor_node/itm_nonlinear_mpc/solver_ethz/acado_integrator.c:63:0:[m[K [01;35m[Kwarning: [m[Kignoring #pragma omp threadprivate [[01;35m[K-Wunknown-pragmas[m[K]
+ #pragma omp threadprivate( auxVar, rk_ttt, rk_xxx, rk_kkk, rk_diffK, rk_rhsTemp, rk_dim9_perm, rk_A, rk_b, rk_diffsPrev2, rk_diffsNew2, rk_diffsTemp2, rk_dim9_swap, rk_dim9_bPerm )
+ 
+[01m[Kcc1:[m[K [01;35m[Kwarning: [m[Kcommand line option ‘[01m[K-std=c++11[m[K’ is valid for C++/ObjC++ but not for C
+[01m[K/home/itm_stud/test_ma_ws/MA_Experiment/src/itm/itm_quadrotor_node/itm_nonlinear_mpc/solver_ethz/acado_integrator.c:[m[K In function ‘[01m[Kacado_integrate[m[K’:
+[01m[K/home/itm_stud/test_ma_ws/MA_Experiment/src/itm/itm_quadrotor_node/itm_nonlinear_mpc/solver_ethz/acado_integrator.c:511:5:[m[K [01;35m[Kwarning: [m[Kunused variable ‘[01m[Kk[m[K’ [[01;35m[K-Wunused-variable[m[K]
+ int [01;35m[Kk[m[K;
+     [01;35m[K^[m[K
+[01m[K/home/itm_stud/test_ma_ws/MA_Experiment/src/itm/itm_quadrotor_node/itm_nonlinear_mpc/solver_ethz/acado_solver.c:[m[K In function ‘[01m[Kacado_modelSimulation[m[K’:
+[01m[K/home/itm_stud/test_ma_ws/MA_Experiment/src/itm/itm_quadrotor_node/itm_nonlinear_mpc/solver_ethz/acado_solver.c:41:0:[m[K [01;35m[Kwarning: [m[Kignoring #pragma omp parallel [[01;35m[K-Wunknown-pragmas[m[K]
+ #pragma omp parallel for private(lRun1, state) shared(acadoWorkspace, acadoVariables)
+ 
+[01m[Kcc1:[m[K [01;35m[Kwarning: [m[Kcommand line option ‘[01m[K-std=c++11[m[K’ is valid for C++/ObjC++ but not for C
+In file included from [01m[K/home/itm_stud/test_ma_ws/MA_Experiment/src/itm/itm_quadrotor_node/itm_nonlinear_mpc/src/sim_only/itm_nonlinear_mpc.cpp:9:0[m[K:
+[01m[K/home/itm_stud/test_ma_ws/MA_Experiment/src/itm/itm_quadrotor_node/itm_nonlinear_mpc/include/itm_nonlinear_mpc/sim_only/itm_nonlinear_mpc.h:27:10:[m[K [01;31m[Kfatal error: [m[Kitm_nonlinear_mpc/mpc_command_rpyt.h: No such file or directory
+ #include [01;31m[K<itm_nonlinear_mpc/mpc_command_rpyt.h>[m[K
+          [01;31m[K^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[m[K
+compilation terminated.
+make[2]: *** [CMakeFiles/itm_nonlinear_mpc_lib.dir/src/sim_only/itm_nonlinear_mpc.cpp.o] Error 1
+make[2]: *** Waiting for unfinished jobs....
+In file included from [01m[K/home/itm_stud/test_ma_ws/MA_Experiment/src/itm/itm_quadrotor_node/itm_nonlinear_mpc/src/sim_only/itm_ukf_observer.cpp:5:0[m[K:
+[01m[K/home/itm_stud/test_ma_ws/MA_Experiment/src/itm/itm_quadrotor_node/itm_nonlinear_mpc/include/itm_nonlinear_mpc/sim_only/itm_ukf_observer.h:16:9:[m[K [01;31m[Kfatal error: [m[Kitm_nonlinear_mpc/itm_ukf_observer.h: No such file or directory
+ #include[01;31m[K<itm_nonlinear_mpc/itm_ukf_observer.h>[m[K
+         [01;31m[K^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[m[K
+compilation terminated.
+make[2]: *** [CMakeFiles/itm_nonlinear_mpc_lib.dir/src/sim_only/itm_ukf_observer.cpp.o] Error 1
+In file included from [01m[K/opt/ros/melodic/include/ros/ros.h:40:0[m[K,
+                 from [01m[K/opt/ros/melodic/include/mav_msgs/conversions.h:32[m[K,
+                 from [01m[K/home/itm_stud/test_ma_ws/MA_Experiment/src/itm/itm_quadrotor_node/itm_nonlinear_mpc/include/itm_nonlinear_mpc/sim_only/itm_nonlinear_mpc_queue.h:22[m[K,
+                 from [01m[K/home/itm_stud/test_ma_ws/MA_Experiment/src/itm/itm_quadrotor_node/itm_nonlinear_mpc/src/sim_only/itm_nonlinear_mpc_queue.cpp:18[m[K:
+[01m[K/home/itm_stud/test_ma_ws/MA_Experiment/src/itm/itm_quadrotor_node/itm_nonlinear_mpc/src/sim_only/itm_nonlinear_mpc_queue.cpp:[m[K In member function ‘[01m[Kvoid quadrotor_control::MPCQueue::insertReferenceTrajectory(const EigenTrajectoryPointDeque&)[m[K’:
+[01m[K/opt/ros/melodic/include/ros/console.h:348:176:[m[K [01;35m[Kwarning: [m[Kformat ‘[01m[K%d[m[K’ expects argument of type ‘[01m[Kint[m[K’, but argument 11 has type ‘[01m[Ksize_t {aka long unsigned int}[m[K’ [[01;35m[K-Wformat=[m[K]
+     ::ros::console::print(filter, __rosconsole_define_location__loc.logger_, __rosconsole_define_location__loc.level_, __FILE__, __LINE__, __ROSCONSOLE_FUNCTION__, __VA_ARGS__[01;35m[K)[m[K
+                                                                                                                                                                                [01;35m[K^[m[K
+[01m[K/opt/ros/melodic/include/ros/console.h:351:5:[m[K [01;36m[Knote: [m[Kin expansion of macro ‘[01m[KROSCONSOLE_PRINT_AT_LOCATION_WITH_FILTER[m[K’
+     [01;36m[KROSCONSOLE_PRINT_AT_LOCATION_WITH_FILTER[m[K(NULL, __VA_ARGS__)
+     [01;36m[K^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[m[K
+[01m[K/opt/ros/melodic/include/ros/console.h:387:7:[m[K [01;36m[Knote: [m[Kin expansion of macro ‘[01m[KROSCONSOLE_PRINT_AT_LOCATION[m[K’
+       [01;36m[KROSCONSOLE_PRINT_AT_LOCATION[m[K(__VA_ARGS__); \
+       [01;36m[K^~~~~~~~~~~~~~~~~~~~~~~~~~~~[m[K
+[01m[K/opt/ros/melodic/include/ros/console.h:572:35:[m[K [01;36m[Knote: [m[Kin expansion of macro ‘[01m[KROS_LOG_COND[m[K’
+ #define ROS_LOG(level, name, ...) [01;36m[KROS_LOG_COND[m[K(true, level, name, __VA_ARGS__)
+                                   [01;36m[K^~~~~~~~~~~~[m[K
+[01m[K/opt/ros/melodic/include/rosconsole/macros_generated.h:110:23:[m[K [01;36m[Knote: [m[Kin expansion of macro ‘[01m[KROS_LOG[m[K’
+ #define ROS_INFO(...) [01;36m[KROS_LOG[m[K(::ros::console::levels::Info, ROSCONSOLE_DEFAULT_NAME, __VA_ARGS__)
+                       [01;36m[K^~~~~~~[m[K
+[01m[K/home/itm_stud/test_ma_ws/MA_Experiment/src/itm/itm_quadrotor_node/itm_nonlinear_mpc/src/sim_only/itm_nonlinear_mpc_queue.cpp:158:9:[m[K [01;36m[Knote: [m[Kin expansion of macro ‘[01m[KROS_INFO[m[K’
+         [01;36m[KR[m[KOS_INFO("Queue start time: %f, queue end time: %f, reference start time: %f, start_index: %d", queue_start_time_, queue_end_time, commanded_time_from_start, start_index);
+         [01;36m[K^[m[K
+make[1]: *** [CMakeFiles/itm_nonlinear_mpc_lib.dir/all] Error 2
+make: *** [all] Error 2

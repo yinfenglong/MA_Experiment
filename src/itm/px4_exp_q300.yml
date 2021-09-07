@@ -66,6 +66,8 @@ windows:
           - source ros.zsh
         - take_off:
           - source ros.zsh
+        - offboard:
+          - source ros.zsh
         - landing:
           - source ros.zsh
   - additional_tools:
@@ -73,6 +75,7 @@ windows:
       panes:
         - rosbag:
           - source ros.zsh
+          - cd ./src/itm/itm_quadrotor_node/itm_nonlinear_mpc/bagfiles
         - trajectory_for_UAV:
           - source ros.zsh
         - trajectory_command:

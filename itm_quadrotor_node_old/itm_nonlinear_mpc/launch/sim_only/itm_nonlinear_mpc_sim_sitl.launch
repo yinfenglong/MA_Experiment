@@ -1,0 +1,48 @@
+<launch>
+  <arg name="quadrotor_name" default="itm_quadrotor" />
+  <arg name="namespace" default="$(arg quadrotor_name)"/>
+  <arg name="node_start_delay1" default="1.0" />
+   <arg name="node_start_delay2" default="6.0" />
+  <!-- <arg name="dest_path" default="/data/YanLI/Yan_ROS_ws/rosbag" /> -->
+  <!-- <arg name="file_name1" default="robot_pose.bag" /> -->
+  <!-- <arg name="topic1" default="/robot_pose" /> -->
+  <!-- <arg name="file_name2" default="set_point.bag" /> -->
+  <!-- <arg name="topic2" default="/itm_quadrotor_control/set_point_pos" /> -->
+  <!-- <group ns="$(arg namespace)"> -->
+  <node pkg="itm_nonlinear_mpc"  name="itm_nonlinear_mpc_controller" type="itm_nonlinear_mpc_node" respawn="false" clear_params="true" output="screen">
+      <!-- <remap from="odometry" to="ground_truth/odometry" /> -->
+      <remap from="local_position_pose" to="/robot_pose" />
+       <!-- <remap from="local_position_pose" to="/mavros/local_position/pose_cus" /> -->
+      <rosparam file="$(find itm_nonlinear_mpc)/resources/itm_nonlinear_mpc_sim_sitl.yaml" />
+      <rosparam file="$(find itm_nonlinear_mpc)/resources/itm_kf_observer_sim.yaml"/>
+      <rosparam file="$(find itm_nonlinear_mpc)/resources/itm_ukf_observer_sim.yaml"/>
+      <param name="use_rc_teleop" value="false"/>
+      <param name="verbose" value="true" />
+      <param name="reference_frame" value="world"/>
+  </node>
+
+  <node name="itm_nonlinear_mpc_offboard" pkg="itm_nonlinear_mpc" type="itm_nonlinear_mpc_offboard_node" respawn="false" clear_params="true" output="screen" launch-prefix="zsh -c 'sleep $(arg node_start_delay1); $0 $@'">
+  </node>
+
+<!-- <node name="recoder1" pkg="rosbag" type="record" output="screen"  args="record -o /data/YanLI/Yan_ROS_ws/rosbag/trajectory_without_wind/trajectory_o/mpc_to /robot_pose"  launch-prefix="zsh -c 'sleep $(arg node_start_delay2); $0 $@'">
+</node><node name="recoder1" pkg="rosbag" type="record" output="screen"  args="record -o /data/YanLI/Yan_ROS_ws/rosbag/trajectory_with_wind/trajectory_z/mpc_to_w /robot_pose"  launch-prefix="zsh -c 'sleep $(arg node_start_delay2); $0 $@'">
+</node> -->
+
+
+<!-- <node name="recoder2" pkg="rosbag" type="record" output="screen" args="record -o  /data/YanLI/Yan_ROS_ws/rosbag/trajectory_without_wind/trajectory_o/mpc_ref_to /itm_quadrotor_control/set_point_pos"  launch-prefix="zsh -c 'sleep $(arg node_start_delay2); $0 $@'">
+</node> -->
+<!--<node name="recoder2" pkg="rosbag" type="record" output="screen" args="record -o  /data/YanLI/Yan_ROS_ws/rosbag/trajectory_with_wind/trajectory_z/mpc_ref_to_w /itm_quadrotor_control/set_point_pos"  launch-prefix="zsh -c 'sleep $(arg node_start_delay2); $0 $@'">
+</node>
+
+
+<node name="recoder3" pkg="rosbag" type="record" output="screen" args="record -o /data/YanLI/Yan_ROS_ws/rosbag/trajectory_without_wind/trajectory_o/kf_to /itm_quadrotor/KF"  launch-prefix="zsh -c 'sleep $(arg node_start_delay2); $0 $@'">
+</node> -->
+<!-- <node name="recoder3" pkg="rosbag" type="record" output="screen" args="record -o /data/YanLI/Yan_ROS_ws/rosbag/trajectory_with_wind/trajectory_o/kf_to_w /itm_quadrotor/KF"  launch-prefix="zsh -c 'sleep $(arg node_start_delay2); $0 $@'">
+</node> -->
+
+
+ <!-- <node pkg="rosbag"  typ="record" name="-a" args="record -o /data/YanLI/Yan_ROS_ws/rosbag /robot_pose"/>
+ </node> -->
+  <!-- </group> -->
+</launch>
+

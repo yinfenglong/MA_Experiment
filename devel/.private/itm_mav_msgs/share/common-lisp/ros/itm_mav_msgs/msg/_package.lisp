@@ -1,0 +1,17 @@
+(cl:defpackage itm_mav_msgs-msg
+  (:use )
+  (:export
+   "<ATTITUDECOMMAND>"
+   "ATTITUDECOMMAND"
+   "<POSITIONCOMMAND>"
+   "POSITIONCOMMAND"
+   "<SETMISSION>"
+   "SETMISSION"
+   "<UAVSTATE>"
+   "UAVSTATE"
+   "<ITM_TRAJECTORY_MSG>"
+   "ITM_TRAJECTORY_MSG"
+   "<ITM_TRAJECTORY_POINT>"
+   "ITM_TRAJECTORY_POINT"
+  ))
+

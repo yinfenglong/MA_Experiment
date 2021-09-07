@@ -1,0 +1,13 @@
+<launch>
+  <node pkg="itm_nonlinear_mpc"  name="itm_nonlinear_mpc_controller" type="itm_nonlinear_mpc_node" respawn="false" clear_params="true" output="screen">
+      <!-- <remap from="odometry" to="ground_truth/odometry" /> -->
+      <remap from="local_position_pose" to="/robot_pose" />
+       <!-- <remap from="local_position_pose" to="/mavros/local_position/pose_cus" /> -->
+      <rosparam file="$(find itm_nonlinear_mpc)/resources/itm_nonlinear_mpc_sim_sitl.yaml" />
+      <rosparam file="$(find itm_nonlinear_mpc)/resources/itm_kf_observer_sim.yaml"/>
+      <rosparam file="$(find itm_nonlinear_mpc)/resources/itm_ukf_observer_sim.yaml"/>
+      <param name="use_rc_teleop" value="false"/>
+      <param name="verbose" value="true" />
+      <param name="reference_frame" value="world"/>
+  </node>
+</launch>

@@ -1,0 +1,8 @@
+prefix=/home/itm_stud/test_ma_ws/MA_Experiment/install
+
+Name: itm_quadrotor_description
+Description: Description of itm_quadrotor_description
+Version: 0.0.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 
