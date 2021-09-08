@@ -92,7 +92,7 @@ if __name__ == '__main__':
                 point.yaw = 0.0
                 point.derivative = 0
                 point.fixed = True
-                point.time_known = True
+                point.time_known = False 
                 point.time_stamp = 0.0
                 trajectory_list.append(point)
                 srv_obj = set_traj_srv(msg_index, trajectory_list)

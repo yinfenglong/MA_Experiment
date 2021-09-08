@@ -1,6 +1,6 @@
 {
-    "acados_include_path": "/data/Develop/github_ws/acados/include",
-    "acados_lib_path": "/data/Develop/github_ws/acados/lib",
+    "acados_include_path": "/home/itm_stud/acados/include",
+    "acados_lib_path": "/home/itm_stud/acados/lib",
     "code_export_directory": "c_generated_code",
     "constraints": {
         "C": [],
@@ -1336,9 +1336,6 @@
         },
         "outputs": {
             "CPU_time": 1,
-            "CPU_time_lin": 0,
-            "CPU_time_qp": 0,
-            "CPU_time_sim": 0,
             "KKT_residual": 1,
             "solver_status": 1,
             "sqp_iter": 1,
@@ -1381,28 +1378,7 @@
         "qp_solver_tol_stat": null,
         "qp_solver_warm_start": 0,
         "regularize_method": null,
-        "sim_method_jac_reuse": [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0
-        ],
+        "sim_method_jac_reuse": false,
         "sim_method_newton_iter": 3,
         "sim_method_num_stages": [
             4,

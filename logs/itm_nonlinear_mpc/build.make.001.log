@@ -1,143 +1,164 @@
-[  0%] Built target dynamic_reconfigure_gencfg
-[  4%] Built target sim_q_shared_lib
+[  2%] Built target sim_q_shared_lib
+[  2%] Built target dynamic_reconfigure_gencfg
 [  5%] Built target ocp_q_shared_lib
+[  5%] Built target _itm_nonlinear_mpc_generate_messages_check_deps_itm_ukf_observer
+[  5%] Built target _itm_nonlinear_mpc_generate_messages_check_deps_SetLEDEffect
+[  5%] Built target _itm_nonlinear_mpc_generate_messages_check_deps_SetAttitude
+[  5%] Built target _itm_nonlinear_mpc_generate_messages_check_deps_itm_trajectory_msg
 [  5%] Built target _itm_nonlinear_mpc_generate_messages_check_deps_SetMode
 [  5%] Built target _itm_nonlinear_mpc_generate_messages_check_deps_SetMission
-[  5%] Built target _itm_nonlinear_mpc_generate_messages_check_deps_itm_ukf_observer
 [  5%] Built target _itm_nonlinear_mpc_generate_messages_check_deps_NavigateGlobal
 [  5%] Built target _itm_nonlinear_mpc_generate_messages_check_deps_itm_trajectory_point
-[  5%] Built target _itm_nonlinear_mpc_generate_messages_check_deps_SetLEDEffect
-[  5%] Built target _itm_nonlinear_mpc_generate_messages_check_deps_itm_trajectory_msg
-[  5%] Built target _itm_nonlinear_mpc_generate_messages_check_deps_SetAttitude
-[  5%] Built target _itm_nonlinear_mpc_generate_messages_check_deps_mpc_set_point_pos
+[  5%] Built target mav_msgs_generate_messages_py
 [  5%] Built target _itm_nonlinear_mpc_generate_messages_check_deps_SetVelocity
 [  5%] Built target _itm_nonlinear_mpc_generate_messages_check_deps_itm_kf_observer
-[  5%] Built target mav_msgs_generate_messages_py
 [  5%] Built target std_msgs_generate_messages_py
-[  5%] Built target _itm_nonlinear_mpc_generate_messages_check_deps_mpc_command_rpyt
-[  5%] Built target mav_msgs_generate_messages_nodejs
-[  5%] Built target std_msgs_generate_messages_nodejs
+[  5%] Built target _itm_nonlinear_mpc_generate_messages_check_deps_mpc_set_point_pos
 [  5%] Built target _itm_nonlinear_mpc_generate_messages_check_deps_itm_trajectory_srv
 [  5%] Built target _itm_nonlinear_mpc_generate_messages_check_deps_Navigate
 [  5%] Built target _itm_nonlinear_mpc_generate_messages_check_deps_GetTelemetry
-[  5%] Built target itm_mav_srvs_generate_messages_py
+[  5%] Built target _itm_nonlinear_mpc_generate_messages_check_deps_mpc_command_rpyt
+[  5%] Built target mav_msgs_generate_messages_nodejs
+[  5%] Built target std_msgs_generate_messages_nodejs
+[  5%] Built target _itm_nonlinear_mpc_generate_messages_check_deps_SetPosition
 [  5%] Built target itm_mav_msgs_generate_messages_lisp
+[  5%] Built target itm_mav_srvs_generate_messages_py
 [  5%] Built target _itm_nonlinear_mpc_generate_messages_check_deps_SetRates
 [  5%] Built target itm_mav_msgs_generate_messages_eus
-[  5%] Built target _itm_nonlinear_mpc_generate_messages_check_deps_SetPosition
-[  5%] Built target _itm_nonlinear_mpc_generate_messages_check_deps_GetControllerState
-[  5%] Built target trajectory_msgs_generate_messages_nodejs
 [  5%] Built target itm_mav_msgs_generate_messages_cpp
-[  5%] Built target trajectory_msgs_generate_messages_py
+[  5%] Built target trajectory_msgs_generate_messages_nodejs
 [  5%] Built target trajectory_msgs_generate_messages_eus
+[  5%] Built target mavros_msgs_generate_messages_py
+[  5%] Built target trajectory_msgs_generate_messages_py
 [  5%] Built target trajectory_msgs_generate_messages_cpp
 [  5%] Built target mav_msgs_generate_messages_eus
-[  5%] Built target trajectory_msgs_generate_messages_lisp
+[  5%] Built target _itm_nonlinear_mpc_generate_messages_check_deps_GetControllerState
 [  5%] Built target mavros_msgs_generate_messages_cpp
-[  5%] Built target mavros_msgs_generate_messages_py
+[  5%] Built target trajectory_msgs_generate_messages_lisp
 [  5%] Built target sensor_msgs_generate_messages_nodejs
 [  5%] Built target actionlib_generate_messages_cpp
 [  5%] Built target _catkin_empty_exported_target
+[  5%] Built target sensor_msgs_generate_messages_eus
+[  5%] Built target actionlib_msgs_generate_messages_lisp
 [  5%] Built target actionlib_msgs_generate_messages_py
 [  5%] Built target itm_mav_srvs_generate_messages_cpp
-[  5%] Built target sensor_msgs_generate_messages_eus
 [  5%] Built target mav_msgs_generate_messages_cpp
-[  5%] Built target actionlib_msgs_generate_messages_lisp
-[  5%] Built target mavros_msgs_generate_messages_lisp
 [  5%] Built target sensor_msgs_generate_messages_cpp
+[  5%] Built target sensor_msgs_generate_messages_lisp
+[  5%] Built target mavros_msgs_generate_messages_lisp
 [  5%] Built target actionlib_msgs_generate_messages_nodejs
 [  5%] Built target std_msgs_generate_messages_eus
 [  5%] Built target nav_msgs_generate_messages_cpp
-[  5%] Built target sensor_msgs_generate_messages_lisp
 [  5%] Built target mavros_msgs_generate_messages_eus
 [  5%] Built target sensor_msgs_generate_messages_py
-[  5%] Built target geometry_msgs_generate_messages_lisp
 [  5%] Built target itm_mav_srvs_generate_messages_lisp
+[  5%] Built target geometry_msgs_generate_messages_lisp
 [  5%] Built target uuid_msgs_generate_messages_lisp
-[  5%] Built target std_msgs_generate_messages_lisp
 [  5%] Built target geometry_msgs_generate_messages_eus
-[  5%] Built target itm_mav_srvs_generate_messages_eus
-[  5%] Built target roscpp_generate_messages_nodejs
 [  5%] Built target geometry_msgs_generate_messages_nodejs
+[  5%] Built target itm_mav_srvs_generate_messages_eus
+[  5%] Built target std_msgs_generate_messages_lisp
+[  5%] Built target roscpp_generate_messages_nodejs
 [  5%] Built target nav_msgs_generate_messages_lisp
 [  5%] Built target mavros_msgs_generate_messages_nodejs
 [  5%] Built target dynamic_reconfigure_generate_messages_py
 [  5%] Built target mav_msgs_generate_messages_lisp
 [  5%] Built target std_msgs_generate_messages_cpp
 [  5%] Built target uuid_msgs_generate_messages_py
+[  5%] Built target geographic_msgs_generate_messages_cpp
 [  5%] Built target nav_msgs_generate_messages_nodejs
 [  5%] Built target geometry_msgs_generate_messages_py
-[  5%] Built target geographic_msgs_generate_messages_cpp
 [  5%] Built target dynamic_reconfigure_generate_messages_lisp
 [  5%] Built target geographic_msgs_generate_messages_eus
-[  5%] Built target geographic_msgs_generate_messages_lisp
 [  5%] Built target rosgraph_msgs_generate_messages_nodejs
-[  5%] Built target roscpp_generate_messages_cpp
+[  5%] Built target geographic_msgs_generate_messages_lisp
 [  5%] Built target geographic_msgs_generate_messages_nodejs
 [  5%] Built target geographic_msgs_generate_messages_py
+[  5%] Built target roscpp_generate_messages_cpp
 [  5%] Built target uuid_msgs_generate_messages_eus
-[  5%] Built target uuid_msgs_generate_messages_cpp
-[  5%] Built target roscpp_generate_messages_lisp
 [  5%] Built target uuid_msgs_generate_messages_nodejs
-[  5%] Built target dynamic_reconfigure_generate_messages_cpp
-[  5%] Built target tf_generate_messages_py
-[  5%] Built target rosgraph_msgs_generate_messages_cpp
+[  5%] Built target uuid_msgs_generate_messages_cpp
 [  5%] Built target roscpp_generate_messages_py
-[  5%] Built target rosgraph_msgs_generate_messages_lisp
+[  5%] Built target roscpp_generate_messages_lisp
+[  5%] Built target rosgraph_msgs_generate_messages_cpp
+[  5%] Built target tf_generate_messages_py
+[  5%] Built target dynamic_reconfigure_generate_messages_cpp
 [  5%] Built target rosgraph_msgs_generate_messages_eus
 [  5%] Built target actionlib_msgs_generate_messages_eus
-[  5%] Built target actionlib_generate_messages_nodejs
-[  5%] Built target rosgraph_msgs_generate_messages_py
+[  5%] Built target rosgraph_msgs_generate_messages_lisp
 [  5%] Built target roscpp_generate_messages_eus
-[  5%] Built target tf_generate_messages_cpp
+[  5%] Built target rosgraph_msgs_generate_messages_py
 [  5%] Built target itm_mav_msgs_generate_messages_nodejs
+[  5%] Built target actionlib_generate_messages_nodejs
 [  7%] Built target itm_nonlinear_mpc_gencfg
+[  7%] Built target tf_generate_messages_cpp
+[  7%] [32mBuilding CXX object CMakeFiles/itm_nonlinear_mpc_lib.dir/src/sim_only/itm_nonlinear_mpc.cpp.o[0m
+[  7%] Built target itm_mav_srvs_generate_messages_nodejs
 [  8%] [32mBuilding CXX object CMakeFiles/itm_nonlinear_mpc_lib.dir/src/sim_only/itm_ukf_observer.cpp.o[0m
-[  8%] [32mBuilding CXX object CMakeFiles/itm_nonlinear_mpc_lib.dir/src/sim_only/itm_nonlinear_mpc.cpp.o[0m
 [  8%] Built target actionlib_msgs_generate_messages_cpp
-[  8%] Built target itm_mav_srvs_generate_messages_nodejs
 [  8%] Built target tf_generate_messages_eus
 [  8%] Built target tf_generate_messages_lisp
-[  8%] Built target actionlib_generate_messages_eus
 [  8%] Built target tf_generate_messages_nodejs
+[  8%] Built target actionlib_generate_messages_eus
 [  8%] Built target geometry_msgs_generate_messages_cpp
-[  8%] Built target actionlib_generate_messages_lisp
-[ 21%] Built target itm_nonlinear_mpc_generate_messages_eus
-[ 21%] Built target itm_mav_msgs_generate_messages_py
-[ 21%] Built target tf2_msgs_generate_messages_cpp
-[ 21%] Built target nav_msgs_generate_messages_eus
-[ 21%] Built target tf2_msgs_generate_messages_eus
-[ 21%] Built target actionlib_generate_messages_py
-[ 21%] Built target tf2_msgs_generate_messages_py
-[ 21%] Built target dynamic_reconfigure_generate_messages_eus
-[ 21%] Built target dynamic_reconfigure_generate_messages_nodejs
-[ 21%] Built target nav_msgs_generate_messages_py
-[ 21%] Built target tf2_msgs_generate_messages_nodejs
-[ 21%] Built target tf2_msgs_generate_messages_lisp
-[ 22%] Built target pid_controller
-[ 24%] Built target marker_node
-[ 38%] Built target itm_nonlinear_mpc_generate_messages_py
-[ 40%] Built target si_controller
-[ 54%] Built target itm_nonlinear_mpc_generate_messages_nodejs
-[ 65%] Built target itm_nonlinear_mpc_generate_messages_lisp
-[ 66%] Built target px4_controller
-[ 78%] Built target itm_nonlinear_mpc_generate_messages_cpp
-[ 79%] Built target mpc_q_controller_safe
-[ 80%] Built target mpc_q_complex_controller
-[ 80%] Built target itm_nonlinear_mpc_generate_messages
-[ 80%] [32m[1mLinking CXX shared library /home/itm_stud/test_ma_ws/MA_Experiment/devel/.private/itm_nonlinear_mpc/lib/libitm_nonlinear_mpc_lib.so[0m
+[  9%] [32mBuilding CXX object CMakeFiles/itm_nonlinear_mpc_lib.dir/solver_ethz/qpoases/SRC/SubjectTo.cpp.o[0m
+[ 22%] Built target itm_nonlinear_mpc_generate_messages_eus
+[ 22%] Built target itm_mav_msgs_generate_messages_py
+[ 22%] Built target actionlib_generate_messages_lisp
+[ 23%] [32mBuilding CXX object CMakeFiles/itm_nonlinear_mpc_lib.dir/solver_ethz/qpoases/SRC/Utils.cpp.o[0m
+[ 23%] Built target tf2_msgs_generate_messages_cpp
+[ 23%] Built target nav_msgs_generate_messages_eus
+[ 23%] Built target tf2_msgs_generate_messages_eus
+[ 23%] Built target actionlib_generate_messages_py
+[ 23%] [32mBuilding CXX object CMakeFiles/itm_nonlinear_mpc_lib.dir/solver_ethz/qpoases/SRC/EXTRAS/SolutionAnalysis.cpp.o[0m
+[ 24%] [32mBuilding CXX object CMakeFiles/itm_nonlinear_mpc_lib.dir/solver_ethz/acado_qpoases_interface.cpp.o[0m
+[ 24%] Built target dynamic_reconfigure_generate_messages_eus
+[ 24%] Built target tf2_msgs_generate_messages_py
+[ 24%] Built target tf2_msgs_generate_messages_nodejs
+[ 24%] Built target dynamic_reconfigure_generate_messages_nodejs
+[ 24%] Built target nav_msgs_generate_messages_py
+[ 25%] [32mBuilding C object CMakeFiles/itm_nonlinear_mpc_lib.dir/solver_ethz/acado_solver.c.o[0m
+[ 25%] [32mBuilding C object CMakeFiles/itm_nonlinear_mpc_lib.dir/solver_ethz/acado_integrator.c.o[0m
+[ 26%] [32mBuilding C object CMakeFiles/itm_nonlinear_mpc_lib.dir/solver_ethz/acado_auxiliary_functions.c.o[0m
+[01m[Kcc1:[m[K [01;35m[Kwarning: [m[Kcommand line option ‘[01m[K-std=c++11[m[K’ is valid for C++/ObjC++ but not for C
+[01m[Kcc1:[m[K [01;35m[Kwarning: [m[Kcommand line option ‘[01m[K-std=c++11[m[K’ is valid for C++/ObjC++ but not for C
+[01m[Kcc1:[m[K [01;35m[Kwarning: [m[Kcommand line option ‘[01m[K-std=c++11[m[K’ is valid for C++/ObjC++ but not for C
+[ 26%] Built target tf2_msgs_generate_messages_lisp
+[01m[K/home/itm_stud/test_ma_ws/MA_Experiment/src/itm/itm_quadrotor_node/itm_nonlinear_mpc/solver_ethz/acado_solver.c:[m[K In function ‘[01m[Kacado_modelSimulation[m[K’:
+[01m[K/home/itm_stud/test_ma_ws/MA_Experiment/src/itm/itm_quadrotor_node/itm_nonlinear_mpc/solver_ethz/acado_solver.c:41:0:[m[K [01;35m[Kwarning: [m[Kignoring #pragma omp parallel [[01;35m[K-Wunknown-pragmas[m[K]
+ #pragma omp parallel for private(lRun1, state) shared(acadoWorkspace, acadoVariables)
+ 
+[01m[K/home/itm_stud/test_ma_ws/MA_Experiment/src/itm/itm_quadrotor_node/itm_nonlinear_mpc/solver_ethz/acado_integrator.c:63:0:[m[K [01;35m[Kwarning: [m[Kignoring #pragma omp threadprivate [[01;35m[K-Wunknown-pragmas[m[K]
+ #pragma omp threadprivate( auxVar, rk_ttt, rk_xxx, rk_kkk, rk_diffK, rk_rhsTemp, rk_dim9_perm, rk_A, rk_b, rk_diffsPrev2, rk_diffsNew2, rk_diffsTemp2, rk_dim9_swap, rk_dim9_bPerm )
+ 
+[01m[K/home/itm_stud/test_ma_ws/MA_Experiment/src/itm/itm_quadrotor_node/itm_nonlinear_mpc/solver_ethz/acado_integrator.c:[m[K In function ‘[01m[Kacado_integrate[m[K’:
+[01m[K/home/itm_stud/test_ma_ws/MA_Experiment/src/itm/itm_quadrotor_node/itm_nonlinear_mpc/solver_ethz/acado_integrator.c:511:5:[m[K [01;35m[Kwarning: [m[Kunused variable ‘[01m[Kk[m[K’ [[01;35m[K-Wunused-variable[m[K]
+ int [01;35m[Kk[m[K;
+     [01;35m[K^[m[K
+[ 27%] Built target pid_controller
+[ 30%] Built target marker_node
+[ 32%] Built target si_controller
+[ 46%] Built target itm_nonlinear_mpc_generate_messages_py
+[ 47%] Built target px4_controller
+[ 59%] Built target itm_nonlinear_mpc_generate_messages_nodejs
+[ 60%] Built target mpc_q_complex_controller
+[ 61%] Built target mpc_q_controller_safe
+[ 74%] Built target itm_nonlinear_mpc_generate_messages_lisp
+[ 86%] Built target itm_nonlinear_mpc_generate_messages_cpp
+[ 86%] Built target itm_nonlinear_mpc_generate_messages
+[ 86%] [32m[1mLinking CXX shared library /home/itm_stud/test_ma_ws/MA_Experiment/devel/.private/itm_nonlinear_mpc/lib/libitm_nonlinear_mpc_lib.so[0m
 [ 92%] Built target itm_nonlinear_mpc_lib
-[35m[1mScanning dependencies of target itm_nonlinear_mpc_offboard_node[0m
 [35m[1mScanning dependencies of target itm_ukf_observer[0m
 [35m[1mScanning dependencies of target aruco_mpc_offboard_node[0m
 [35m[1mScanning dependencies of target itm_kf_observer[0m
+[35m[1mScanning dependencies of target itm_nonlinear_mpc_offboard_node[0m
 [35m[1mScanning dependencies of target itm_pid_offboard_node[0m
 [35m[1mScanning dependencies of target itm_nonlinear_mpc_node[0m
+[ 92%] [32mBuilding CXX object CMakeFiles/aruco_mpc_offboard_node.dir/src/sim_only/itm_nonlinear_aruco_mpc_offboard_node.cpp.o[0m
 [ 93%] [32mBuilding CXX object CMakeFiles/itm_pid_offboard_node.dir/src/sim_only/itm_pid_offboard_node.cpp.o[0m
-[ 93%] [32mBuilding CXX object CMakeFiles/aruco_mpc_offboard_node.dir/src/sim_only/itm_nonlinear_aruco_mpc_offboard_node.cpp.o[0m
+[ 93%] [32mBuilding CXX object CMakeFiles/itm_kf_observer.dir/src/sim_only/itm_kf_observer.cpp.o[0m
 [ 93%] [32mBuilding CXX object CMakeFiles/itm_nonlinear_mpc_offboard_node.dir/src/sim_only/itm_nonlinear_mpc_offboard_node.cpp.o[0m
 [ 94%] [32mBuilding CXX object CMakeFiles/itm_ukf_observer.dir/src/sim_only/itm_ukf_observer.cpp.o[0m
-[ 94%] [32mBuilding CXX object CMakeFiles/itm_kf_observer.dir/src/sim_only/itm_kf_observer.cpp.o[0m
 [ 95%] [32mBuilding CXX object CMakeFiles/itm_nonlinear_mpc_node.dir/src/sim_only/itm_nonlinear_mpc_node.cpp.o[0m
 [ 95%] [32m[1mLinking CXX executable /home/itm_stud/test_ma_ws/MA_Experiment/devel/.private/itm_nonlinear_mpc/lib/itm_nonlinear_mpc/itm_pid_offboard_node[0m
 [ 95%] Built target itm_pid_offboard_node
@@ -148,6 +169,6 @@
 [ 98%] [32m[1mLinking CXX executable /home/itm_stud/test_ma_ws/MA_Experiment/devel/.private/itm_nonlinear_mpc/lib/itm_nonlinear_mpc/itm_nonlinear_mpc_node[0m
 [ 98%] Built target itm_nonlinear_mpc_node
 [ 98%] [32m[1mLinking CXX executable /home/itm_stud/test_ma_ws/MA_Experiment/devel/.private/itm_nonlinear_mpc/lib/itm_nonlinear_mpc/itm_ukf_observer[0m
+[ 98%] Built target itm_ukf_observer
 [100%] [32m[1mLinking CXX executable /home/itm_stud/test_ma_ws/MA_Experiment/devel/.private/itm_nonlinear_mpc/lib/itm_nonlinear_mpc/itm_kf_observer[0m
-[100%] Built target itm_ukf_observer
 [100%] Built target itm_kf_observer

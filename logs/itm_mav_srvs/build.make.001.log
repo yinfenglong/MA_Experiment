@@ -1,20 +1,20 @@
+[  0%] Built target geometry_msgs_generate_messages_lisp
+[  0%] Built target itm_mav_msgs_generate_messages_lisp
+[  0%] Built target itm_mav_msgs_generate_messages_py
 [  0%] Built target geometry_msgs_generate_messages_py
 [  0%] Built target itm_mav_msgs_generate_messages_nodejs
-[  0%] Built target itm_mav_msgs_generate_messages_py
 [  0%] Built target geometry_msgs_generate_messages_nodejs
-[  0%] Built target itm_mav_msgs_generate_messages_lisp
-[  0%] Built target geometry_msgs_generate_messages_lisp
 [  0%] Built target geometry_msgs_generate_messages_eus
 [  0%] Built target itm_mav_msgs_generate_messages_eus
 [  0%] Built target itm_mav_msgs_generate_messages_cpp
 [  0%] Built target geometry_msgs_generate_messages_cpp
+[  0%] Built target _itm_mav_srvs_generate_messages_check_deps_GetControllerState
 [  0%] Built target _itm_mav_srvs_generate_messages_check_deps_SetMode
 [  0%] Built target _itm_mav_srvs_generate_messages_check_deps_mpc_set_point_pos
 [  0%] Built target _itm_mav_srvs_generate_messages_check_deps_itm_trajectory_srv
-[  0%] Built target _itm_mav_srvs_generate_messages_check_deps_GetControllerState
-[ 18%] Built target itm_mav_srvs_generate_messages_cpp
-[ 50%] Built target itm_mav_srvs_generate_messages_lisp
-[ 72%] Built target itm_mav_srvs_generate_messages_eus
-[ 90%] Built target itm_mav_srvs_generate_messages_nodejs
-[100%] Built target itm_mav_srvs_generate_messages_py
+[ 77%] Built target itm_mav_srvs_generate_messages_lisp
+[ 77%] Built target itm_mav_srvs_generate_messages_cpp
+[ 77%] Built target itm_mav_srvs_generate_messages_nodejs
+[ 77%] Built target itm_mav_srvs_generate_messages_py
+[100%] Built target itm_mav_srvs_generate_messages_eus
 [100%] Built target itm_mav_srvs_generate_messages

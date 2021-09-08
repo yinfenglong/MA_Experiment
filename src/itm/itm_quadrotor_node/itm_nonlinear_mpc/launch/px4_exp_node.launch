@@ -4,9 +4,9 @@
     <arg name="is_simulation" default="false" />
     <arg name="publish_trajectory" default="false"/>
     <!-- take off height (absolut) -->
-    <arg name="takeoff_height" default="0.4" />
+    <arg name="takeoff_height" default="0.45" />
     <!-- decision height should be slightly heigher than the initial height 0.23 for q250, 0.18 for q300-->
-    <arg name="decision_height" default="0.18" />
+    <arg name="decision_height" default="0.3" />
 
     <group if="$(arg launch_mavros)">
         <include file="$(find mavros)/launch/node.launch">
@@ -23,7 +23,7 @@
     <!-- if only simulation -->
     <group if="$(arg is_simulation)">
         <arg name="robot_loc_pose" default="/robot_pose" />
-        <arg name="landing_target_topic" default="/robotnik_base_control/odom"/>
+        <!-- <arg name="landing_target_topic" default="/robotnik_base_control/odom"/> -->
         <!-- <node name="si_controller" pkg="itm_nonlinear_mpc" type="si_controller" respawn="false" clear_params="true" output="screen" >
             <remap from="/real_pose" to="$(arg robot_loc_pose)" />
             <param name="sim_only" value="$(arg is_simulation)"/>
@@ -72,7 +72,7 @@
     <!-- hardware experiment -->
     <group unless="$(arg is_simulation)">
         <!-- <arg name="robot_loc_pose" default="/vrpn_client_node/ITM_Q300/pose" /> -->
-        <arg name="landing_target_topic" default="/vrpn_client_node/l_hera/pose"/>
+        <!-- <arg name="landing_target_topic" default="/vrpn_client_node/l_hera/pose"/> -->
         <!-- <arg name="robot_loc_pose" default="/vrpn_client_node/ITM_Q250/pose" /> -->
         <arg name="robot_loc_pose" default="/vrpn_client_node/ITM_Q330/pose" />
 
@@ -97,7 +97,7 @@
             <remap from="/real_pose" to="$(arg robot_loc_pose)" />
             <param name="sim_only" value="$(arg is_simulation)"/>
             <param name="takeoff_height" value="$(arg takeoff_height)" />
-            <param name="control_offset" value="0.35" />
+            <param name="control_offset" value="0.45" />
         </node>
         <!-- <node name="mpc_controller" pkg="itm_nonlinear_mpc" type="mpc_q_complex_controller" respawn="false" clear_params="true" output="screen" >
             <remap from="/real_pose" to="$(arg robot_loc_pose)" />
@@ -135,7 +135,7 @@
             <remap from="/landing_pf_pose" to="/robotnik_base_control/odom" /> -->
             <!--safe zoon defenitoin x_min, x_max, y_min, y_max, z_max-->
             <!-- <rosparam param="fence_def">[-1.0, 1.0, -1.0, 1.0, 2.2]</rosparam> -->
-            <!-- <rosparam param="fence_def">[-0.8, 0.8, -0.8, 0.7, 0.7]</rosparam> -->
+            <rosparam param="fence_def">[-0.8, 0.8, -0.8, 0.7, 0.7]</rosparam>
         </node>
     </group>
     <group unless="$(arg is_simulation)">

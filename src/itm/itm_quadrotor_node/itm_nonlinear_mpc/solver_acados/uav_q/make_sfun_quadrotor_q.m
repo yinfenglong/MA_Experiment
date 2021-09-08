@@ -38,7 +38,7 @@ SOURCES = { ...
             'acados_solver_quadrotor_q.c'
           };
 
-INC_PATH = '/data/Develop/github_ws/acados/include';
+INC_PATH = '/home/itm_stud/acados/include';
 
 INCS = {['-I', fullfile(INC_PATH, 'blasfeo', 'include')], ...
         ['-I', fullfile(INC_PATH, 'hpipm', 'include')], ...
@@ -54,7 +54,7 @@ COMPDEFINES = 'COMPDEFINES=$COMPDEFINES';
 
 
 
-LIB_PATH = ['-L', fullfile('/data/Develop/github_ws/acados/lib')];
+LIB_PATH = ['-L', fullfile('/home/itm_stud/acados/lib')];
 
 LIBS = {'-lacados', '-lhpipm', '-lblasfeo'};
 

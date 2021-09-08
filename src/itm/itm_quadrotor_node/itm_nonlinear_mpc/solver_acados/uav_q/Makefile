@@ -66,8 +66,8 @@ OBJ+= $(OCP_OBJ)
 EXTERNAL_DIR=
 EXTERNAL_LIB=
 
-INCLUDE_PATH = /data/Develop/github_ws/acados/include
-LIB_PATH = /data/Develop/github_ws/acados/lib
+INCLUDE_PATH = /home/itm_stud/acados/include
+LIB_PATH = /home/itm_stud/acados/lib
 all: clean casadi_fun example_sim example
 shared_lib: bundled_shared_lib ocp_shared_lib sim_shared_lib
 

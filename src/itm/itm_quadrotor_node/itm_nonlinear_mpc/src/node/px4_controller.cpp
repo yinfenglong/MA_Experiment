@@ -152,9 +152,9 @@ void emergency_landing()
     if (!got_landing_target)
     {
         landing_target = current_pos;
+        ROS_INFO_STREAM("landing target" << landing_target);
         landing_target.pose.position.z = initial_pos.pose.position.z;
         got_landing_target = true;
-        ROS_INFO_STREAM("landing target" << landing_target);
     }
     landing_command(landing_target);
     if (current_pos.pose.position.z - initial_pos.pose.position.z <= 0.12) // may be we don't need to use abs()

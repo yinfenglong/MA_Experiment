@@ -1,22 +1,22 @@
+[  0%] Built target std_msgs_generate_messages_nodejs
 [  0%] Built target std_msgs_generate_messages_py
 [  0%] Built target geometry_msgs_generate_messages_py
 [  0%] Built target geometry_msgs_generate_messages_nodejs
-[  0%] Built target std_msgs_generate_messages_nodejs
 [  0%] Built target geometry_msgs_generate_messages_lisp
-[  0%] Built target _itm_mav_msgs_generate_messages_check_deps_itm_trajectory_point
-[  0%] Built target _itm_mav_msgs_generate_messages_check_deps_SetMission
-[  0%] Built target _itm_mav_msgs_generate_messages_check_deps_AttitudeCommand
-[  0%] Built target geometry_msgs_generate_messages_cpp
-[  0%] Built target std_msgs_generate_messages_lisp
 [  0%] Built target _itm_mav_msgs_generate_messages_check_deps_UavState
-[  0%] Built target geometry_msgs_generate_messages_eus
+[  0%] Built target std_msgs_generate_messages_lisp
 [  0%] Built target _itm_mav_msgs_generate_messages_check_deps_itm_trajectory_msg
-[  0%] Built target _itm_mav_msgs_generate_messages_check_deps_PositionCommand
-[  0%] Built target std_msgs_generate_messages_eus
 [  0%] Built target std_msgs_generate_messages_cpp
-[ 18%] Built target itm_mav_msgs_generate_messages_nodejs
-[ 37%] Built target itm_mav_msgs_generate_messages_cpp
-[ 59%] Built target itm_mav_msgs_generate_messages_py
-[ 81%] Built target itm_mav_msgs_generate_messages_eus
-[100%] Built target itm_mav_msgs_generate_messages_lisp
+[  0%] Built target _itm_mav_msgs_generate_messages_check_deps_PositionCommand
+[  0%] Built target geometry_msgs_generate_messages_eus
+[  0%] Built target _itm_mav_msgs_generate_messages_check_deps_itm_trajectory_point
+[  0%] Built target geometry_msgs_generate_messages_cpp
+[  0%] Built target _itm_mav_msgs_generate_messages_check_deps_AttitudeCommand
+[  0%] Built target _itm_mav_msgs_generate_messages_check_deps_SetMission
+[  0%] Built target std_msgs_generate_messages_eus
+[ 18%] Built target itm_mav_msgs_generate_messages_cpp
+[ 37%] Built target itm_mav_msgs_generate_messages_lisp
+[ 56%] Built target itm_mav_msgs_generate_messages_nodejs
+[ 78%] Built target itm_mav_msgs_generate_messages_py
+[100%] Built target itm_mav_msgs_generate_messages_eus
 [100%] Built target itm_mav_msgs_generate_messages
