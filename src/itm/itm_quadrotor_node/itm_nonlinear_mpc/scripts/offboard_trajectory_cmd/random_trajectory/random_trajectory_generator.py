@@ -21,7 +21,13 @@ def random_matrix_generator(x_min, x_max, y_min, y_max, z_min, z_max, size):
                 random_matrix = np.append( random_matrix, a[0].reshape(1,3), axis=0 )
                 # np.append( (random_matrix,a[i].reshape(1,3)), axis=0 )
                 if (random_matrix.shape[0] >= size+1):
-                    random_matrix = np.append( random_matrix, np.array([[0, 0, 0.4]]), axis=0 )
+                    # 10 random points
+                    # random_matrix = np.append( random_matrix, np.array([[0.21, 0, 0.45], [0, 0, 0.4]]), axis=0 )
+                    # 20 random points (z~(0.45-0.6))
+                    # random_matrix = np.append( random_matrix, np.array([[0.21, 0.3, 0.5], [0.21, 0, 0.45], [0, 0, 0.4]]), axis=0 )
+                    # 20 random points (z~(0.45-0.5))
+                    random_matrix = np.append( random_matrix, np.array([[-0.09, 0.08, 0.46], [0, 0.08, 0.46], [0, 0, 0.4]]), axis=0 )
+                    # random_matrix = np.append( random_matrix, np.array([[0, 0, 0.4]]), axis=0 )
                     print("random_matrix:", random_matrix)
                     print("random_matrix has enough values")
                     return random_matrix 
