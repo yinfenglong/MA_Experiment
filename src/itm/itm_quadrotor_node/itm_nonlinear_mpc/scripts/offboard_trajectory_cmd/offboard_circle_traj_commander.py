@@ -201,7 +201,7 @@ class TrajectoryGenerator(object):
 if __name__ == '__main__':
     rospy.init_node('uav_squared_trajectory')
 
-    trajectory_gen = TrajectoryGenerator(traj_period=40, horizon=21,)
+    trajectory_gen = TrajectoryGenerator(traj_period=30, horizon=21,)
 
     while not rospy.is_shutdown():
         if trajectory_gen.is_ready():

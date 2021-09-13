@@ -130,8 +130,10 @@ namespace acados_quadrotor
             double computed_thrust;
             computed_thrust = robot_command[3] / 9.8066 * control_acc_offset;
             // max acceleration based on the constraint defined in MPC. One can edit it accordingly
-            if (computed_thrust >= 1.05 * control_acc_offset)
-                computed_thrust = 1.05 * control_acc_offset;
+            // if (computed_thrust >= 1.05 * control_acc_offset)
+            //     computed_thrust = 1.05 * control_acc_offset;
+            if (computed_thrust >= 1.08 * control_acc_offset)
+                computed_thrust = 1.08 * control_acc_offset;
             msg.thrust = computed_thrust;
 
             msg.body_rate.x = robot_command[0];

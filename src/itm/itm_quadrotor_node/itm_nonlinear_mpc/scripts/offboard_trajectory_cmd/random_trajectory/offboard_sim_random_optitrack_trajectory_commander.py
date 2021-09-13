@@ -51,7 +51,7 @@ if __name__ == '__main__':
 
     # generate random trajectory: x~[-0.75,0.75], y~[-0.75,0.65], z~[0.5,0.65]
     # random_matrix_generator(x_min, x_max, y_min, y_max, z_min, z_max, size)
-    trajectory_matrix = random_matrix_generator(-75, 75, -75, 65, 50, 60, 20)
+    trajectory_matrix = random_matrix_generator(-70, 70, -70, 60, 45, 60, 20)
     trajectory_waypoints = np.array( trajectory_matrix )
     # trajectory_waypoints = np.array( 0.01 * np.random.randint( low=[x_min, y_min, z_min], high=[x_max, y_max, z_max], size=(20,3) ) )
     # trajectory_waypoints = 0.01 * np.random.randint( low=[-80,-80,50], high=[80,80,80], size=(50,3) )
