@@ -75,7 +75,7 @@ windows:
       panes:
         - rosbag:
           - source ros.zsh
-          - cd src/itm/itm_quadrotor_node/bagfiles/Q330
+          - cd src/itm/itm_quadrotor_node/bagfiles/rosbag_Q330
         - magnet:
           - source ros.zsh
         - trajectory_for_UAV:
