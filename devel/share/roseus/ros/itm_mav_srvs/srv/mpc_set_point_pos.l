@@ -1,1 +1,0 @@
-/home/itm_stud/test_ma_ws/MA_Experiment/devel/.private/itm_mav_srvs/share/roseus/ros/itm_mav_srvs/srv/mpc_set_point_pos.l

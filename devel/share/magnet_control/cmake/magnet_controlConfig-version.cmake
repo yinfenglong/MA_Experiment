@@ -1,1 +1,0 @@
-/home/itm_stud/test_ma_ws/MA_Experiment/devel/.private/magnet_control/share/magnet_control/cmake/magnet_controlConfig-version.cmake

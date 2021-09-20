@@ -1,8 +1,0 @@
-prefix=/home/itm_stud/test_ma_ws/MA_Experiment/install
-
-Name: itm_exp_record_tools
-Description: Description of itm_exp_record_tools
-Version: 0.0.0
-Cflags: 
-Libs: -L${prefix}/lib 
-Requires: 

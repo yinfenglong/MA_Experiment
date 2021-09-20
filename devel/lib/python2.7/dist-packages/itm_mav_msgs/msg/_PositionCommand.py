@@ -1,1 +1,0 @@
-/home/itm_stud/test_ma_ws/MA_Experiment/devel/.private/itm_mav_msgs/lib/python2.7/dist-packages/itm_mav_msgs/msg/_PositionCommand.py

@@ -1,8 +1,0 @@
-prefix=/home/itm_stud/test_ma_ws/MA_Experiment/install
-
-Name: itm_nonlinear_mpc
-Description: Description of itm_nonlinear_mpc
-Version: 0.0.0
-Cflags: -I${prefix}/include
-Libs: -L${prefix}/lib -litm_nonlinear_mpc
-Requires: mav_msgs roscpp rospy std_msgs message_runtime

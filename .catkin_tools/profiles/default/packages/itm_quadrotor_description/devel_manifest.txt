@@ -1,5 +1,0 @@
-itm/itm_quadrotor_node/itm_quadrotor_description
-/home/itm_stud/test_ma_ws/MA_Experiment/devel/.private/itm_quadrotor_description/cmake.lock /home/itm_stud/test_ma_ws/MA_Experiment/devel/./cmake.lock
-/home/itm_stud/test_ma_ws/MA_Experiment/devel/.private/itm_quadrotor_description/share/itm_quadrotor_description/cmake/itm_quadrotor_descriptionConfig.cmake /home/itm_stud/test_ma_ws/MA_Experiment/devel/share/itm_quadrotor_description/cmake/itm_quadrotor_descriptionConfig.cmake
-/home/itm_stud/test_ma_ws/MA_Experiment/devel/.private/itm_quadrotor_description/share/itm_quadrotor_description/cmake/itm_quadrotor_descriptionConfig-version.cmake /home/itm_stud/test_ma_ws/MA_Experiment/devel/share/itm_quadrotor_description/cmake/itm_quadrotor_descriptionConfig-version.cmake
-/home/itm_stud/test_ma_ws/MA_Experiment/devel/.private/itm_quadrotor_description/lib/pkgconfig/itm_quadrotor_description.pc /home/itm_stud/test_ma_ws/MA_Experiment/devel/lib/pkgconfig/itm_quadrotor_description.pc

@@ -1,2 +1,0 @@
-set(itm_nonlinear_mpc_MESSAGE_FILES "msg/mpc_command_rpyt.msg;msg/itm_kf_observer.msg;msg/itm_ukf_observer.msg;msg/itm_trajectory_point.msg;msg/itm_trajectory_msg.msg;msg/SetMission.msg")
-set(itm_nonlinear_mpc_SERVICE_FILES "srv/mpc_set_point_pos.srv;srv/GetTelemetry.srv;srv/Navigate.srv;srv/NavigateGlobal.srv;srv/SetPosition.srv;srv/SetVelocity.srv;srv/SetAttitude.srv;srv/SetRates.srv;srv/SetLEDEffect.srv;srv/itm_trajectory_srv.srv;srv/SetMode.srv;srv/GetControllerState.srv")
