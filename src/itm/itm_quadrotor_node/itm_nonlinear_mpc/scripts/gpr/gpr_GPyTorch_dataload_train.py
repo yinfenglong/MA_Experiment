@@ -22,6 +22,7 @@ import sys
 from matplotlib import pyplot as plt
 from tqdm.notebook import tqdm
 import tqdm
+import os.path
 
 class GpTrainCombine(object):
     def __init__(self, x_train_idx, y_train_idx, gp_model_file_path, npz_name ):
@@ -48,6 +49,8 @@ class GpTrainCombine(object):
         # numpy into one dimension, then create a Tensor form from numpy (=torch.linspace)
         X = (gp_train[x_train_idx]).flatten()
         y = (gp_train[y_train_idx]).flatten()
+        np.random.shuffle(X)
+        np.random.shuffle(y)
         self.train_y_range = np.max(y) - np.min(y)
         X = torch.from_numpy( X )
         y = torch.from_numpy( y )
@@ -101,7 +104,10 @@ class GpTrainCombine(object):
         time_2 = time.time()
         print("training time is: ", (time_2 - time_1))
         # torch.save(model.state_dict(), './model_state.pth')
-        torch.save(model.state_dict(), './' +  sys.argv[1] + '/train_pre_model/model_state_' + x_train_idx +'.pth')
+        model_path = './' +  sys.argv[1] + '/train_pre_model/'
+        if not os.path.exists(model_path):
+            os.makedirs( model_path )
+        torch.save(model.state_dict(), model_path + 'model_state_' + x_train_idx +'.pth')
         # likelihood_state_dict = likelihood.state_dict()
         # torch.save(likelihood_state_dict, './likelihood_state.pth')
         # torch.save(likelihood_state_dict, './' + sys.argv[1] + '/train_pre_model/likelihood_state_' + x_train_idx +'.pth')
@@ -125,7 +131,8 @@ class GPModel(ApproximateGP):
 if __name__ == '__main__':
     # ### From .npz load datas for gp training### #
     file_path = './' + sys.argv[1]
-    npz_name = 'combined_q330.npz'
+    # npz_name = 'combined_q330.npz'
+    npz_name = sys.argv[2] 
     gp_train = np.load( file_path + '/' + npz_name)
 
     x_idx_list = [i for i in gp_train.keys()][:6]

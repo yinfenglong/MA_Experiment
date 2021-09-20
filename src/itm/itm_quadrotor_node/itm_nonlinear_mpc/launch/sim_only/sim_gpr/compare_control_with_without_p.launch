@@ -4,8 +4,8 @@
     <!-- <arg name="robot_loc_pose" default="/vrpn_client_node/ITM_Q330/pose" /> -->
     <arg name="gp_mean_limit" default="1" />
     <!-- simulate setting p -->
-    <arg name="offset" default="0.44" />
-    <arg name="npy" default="exp_data_control_with_p_q300_20210920_1.npy" />  <!-- xxx.npy is the destination of this launch file -->
+    <arg name="offset" default="0.43" />
+    <arg name="npy" default="exp_data_control_with_p_q300_20210920_2222_random_combine.npy" />  <!-- xxx.npy is the destination of this launch file -->
     <arg name="experiment" default="q300" />   <!-- q330 or q300 or gazebo -->
 
     <!-- gp -->
@@ -14,13 +14,14 @@
         <param name="mpc_with_gp" value="$(arg mpc_and_gp)" />
         <remap from="/real_pose" to="$(arg robot_loc_pose)" />
         <!-- combined data type -->
-        <!-- <param name="gp_model" value="/home/itm_stud/test_ma_ws/MA_Experiment/src/itm/itm_quadrotor_node/itm_nonlinear_mpc/scripts/gpr/q330" />
-        <param name="npz_name" default="combined_q330.npz" />
-        <param name="data_type" default="combine" /> -->
+        <param name="gp_model" value="/home/itm_stud/test_ma_ws/MA_Experiment/src/itm/itm_quadrotor_node/itm_nonlinear_mpc/scripts/gpr/q300" />
+        <param name="npz_name" value="combined_q300.npz" />
+        <param name="data_type" value="combine" />
         <!-- single trained data -->
-        <param name="gp_model" value="/home/itm_stud/test_ma_ws/MA_Experiment/src/itm/itm_quadrotor_node/itm_nonlinear_mpc/scripts/gpr/q330/20210913_2_circle_30s" />
+        <!-- <param name="gp_model" value="/home/itm_stud/test_ma_ws/MA_Experiment/src/itm/itm_quadrotor_node/itm_nonlinear_mpc/scripts/gpr/q300/20210920_1_circle_30s" /> -->
+        <!-- <param name="gp_model" value="/home/itm_stud/test_ma_ws/MA_Experiment/src/itm/itm_quadrotor_node/itm_nonlinear_mpc/scripts/gpr/q300/20210920_2_random_20" />
         <param name="npz_name" value="datas_for_gp_y.npz" />
-        <param name="data_type" value="single" />
+        <param name="data_type" value="single" /> -->
         <param name="gp_limit" value="$(arg gp_mean_limit)" />
     </node>
 

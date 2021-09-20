@@ -78,8 +78,8 @@ def plot_result( with_p, without_p, legend  ):
     ax.grid(axis='x', which='both')
     title = sys.argv[2]
     plt.title(title + ':' + legend)
-    manger = plt.get_current_fig_manager()
-    manger.window.showMaximized()
+    # manger = plt.get_current_fig_manager()
+    # manger.window.showMaximized()
     fig = plt.gcf()
     plt.show()
     figures_path = './figures_' + sys.argv[2] + '/'
@@ -93,7 +93,7 @@ if __name__ == '__main__':
     
     wx_p, wy_p, wz_p, thrust_p, wx, wy, wz, thrust, t = load_npy(np_file)
 
-    plot_result(wx_p, wx, 'wx' )
-    plot_result(wy_p, wy, 'wy' )
-    plot_result(wz_p, wz, 'wz' )
+    # plot_result(wx_p, wx, 'wx' )
+    # plot_result(wy_p, wy, 'wy' )
+    # plot_result(wz_p, wz, 'wz' )
     plot_result(thrust_p, thrust, 'thrust' )

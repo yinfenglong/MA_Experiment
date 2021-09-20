@@ -20,6 +20,7 @@ from math import floor
 import time
 import sys
 from matplotlib import pyplot as plt
+import os.path
 
 class GpMeanCombine(object):
     def __init__(self, x_train_idx, y_train_idx, gp_model_file_path, npz_name ):
@@ -48,6 +49,8 @@ class GpMeanCombine(object):
         # numpy into one dimension, then create a Tensor form from numpy (=torch.linspace)
         X = (gp_train[x_train_idx]).flatten()
         y = (gp_train[y_train_idx]).flatten()
+        np.random.shuffle(X)
+        np.random.shuffle(y)
         self.train_y_range = np.max(y) - np.min(y)
         X = torch.from_numpy( X )
         y = torch.from_numpy( y )
@@ -138,11 +141,14 @@ class GpMeanCombine(object):
             ax.grid(axis='y', which='minor', color='darkorange', alpha=0.5)
 
             plt.title( sys.argv[1] + '/' + x_train_idx )
-            manger = plt.get_current_fig_manager()
-            manger.window.showMaximized()
+            # manger = plt.get_current_fig_manager()
+            # manger.window.showMaximized()
             fig = plt.gcf()
             plt.show()
-            fig.savefig( './' + sys.argv[1] + '/figures/'+ x_train_idx + '.png' )
+            figure_path = './' + sys.argv[1] + '/figures/'
+            if not os.path.exists(figure_path):
+                os.makedirs(figure_path )
+            fig.savefig( figure_path + x_train_idx + '.png' )
 
     def predict_mean(self, test_point ):
         target_device = 'cuda:0'

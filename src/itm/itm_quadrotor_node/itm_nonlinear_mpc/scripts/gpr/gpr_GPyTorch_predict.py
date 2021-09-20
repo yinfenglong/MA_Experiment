@@ -133,8 +133,8 @@ class GpMean(object):
             ax.grid(axis='y', which='minor', color='darkorange', alpha=0.5)
 
             plt.title( sys.argv[1] + '/' + x_train_idx )
-            manger = plt.get_current_fig_manager()
-            manger.window.showMaximized()
+            # manger = plt.get_current_fig_manager()
+            # manger.window.showMaximized()
             fig = plt.gcf()
             plt.show()
             figures_path = './' + sys.argv[1] + '/figures/'

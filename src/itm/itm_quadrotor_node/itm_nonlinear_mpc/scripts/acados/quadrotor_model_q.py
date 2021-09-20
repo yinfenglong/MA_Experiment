@@ -8,7 +8,6 @@ LastEditTime: 2021-08-30
 '''
 import casadi as ca
 from acados_template import AcadosModel
-import numpy as np
 
 class QuadRotorModel(object):
     def __init__(self,):
@@ -36,24 +35,6 @@ class QuadRotorModel(object):
         # states  [p, q, v]
         states = ca.vcat([x_, y_, z_, qw_, qx_, qy_, qz_, vx_, vy_, vz_])
 
-        # set parameters
-        gp_vx_ = ca.SX.sym('gp_vx')
-        gp_vy_ = ca.SX.sym('gp_vy')
-        gp_vz_ = ca.SX.sym('gp_vz')
-        gp_means = ca.vertcat(gp_vx_, gp_vy_, gp_vz_)
-
-        # ### GP ### #
-        B_x = np.array([[0., 0., 0.],
-            [0., 0., 0.],
-            [0., 0., 0.],
-            [0., 0., 0.],
-            [0., 0., 0.],
-            [0., 0., 0.],
-            [0., 0., 0.],
-            [1., 0., 0.],
-            [0., 1., 0.],
-            [0., 0., 1.]])
-
         rhs = [
             vx_,
             vy_,
@@ -73,12 +54,12 @@ class QuadRotorModel(object):
         f_impl = x_dot - self.f(states, controls)
 
         model = AcadosModel()
-        model.f_expl_expr = self.f(states, controls) + ca.mtimes(B_x, gp_means)
-        model.f_impl_expr = f_impl - ca.mtimes(B_x, gp_means)
+        model.f_expl_expr = self.f(states, controls)
+        model.f_impl_expr = f_impl
         model.x = states
         model.xdot = x_dot
         model.u = controls
-        model.p = ca.vertcat( gp_means ) 
+        model.p = []
         model.name = 'quadrotor_q'
 
         constraints = ca.types.SimpleNamespace()
