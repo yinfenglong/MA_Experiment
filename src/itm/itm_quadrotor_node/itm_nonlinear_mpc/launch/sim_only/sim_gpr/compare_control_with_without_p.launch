@@ -1,0 +1,38 @@
+<launch>
+    <arg name="mpc_and_gp" default="true" />
+    <arg name="robot_loc_pose" default="/vrpn_client_node/ITM_Q300/pose" />
+    <!-- <arg name="robot_loc_pose" default="/vrpn_client_node/ITM_Q330/pose" /> -->
+    <arg name="gp_mean_limit" default="1" />
+    <!-- simulate setting p -->
+    <arg name="offset" default="0.44" />
+    <arg name="npy" default="exp_data_control_with_p_q300_20210920_1.npy" />  <!-- xxx.npy is the destination of this launch file -->
+    <arg name="experiment" default="q300" />   <!-- q330 or q300 or gazebo -->
+
+    <!-- gp -->
+    <!-- using combined datas -->
+    <node name="offboard_sim_gp" pkg="itm_nonlinear_mpc" type="offboard_sim_mpc_gp.py" respawn="false" output="screen" >
+        <param name="mpc_with_gp" value="$(arg mpc_and_gp)" />
+        <remap from="/real_pose" to="$(arg robot_loc_pose)" />
+        <!-- combined data type -->
+        <!-- <param name="gp_model" value="/home/itm_stud/test_ma_ws/MA_Experiment/src/itm/itm_quadrotor_node/itm_nonlinear_mpc/scripts/gpr/q330" />
+        <param name="npz_name" default="combined_q330.npz" />
+        <param name="data_type" default="combine" /> -->
+        <!-- single trained data -->
+        <param name="gp_model" value="/home/itm_stud/test_ma_ws/MA_Experiment/src/itm/itm_quadrotor_node/itm_nonlinear_mpc/scripts/gpr/q330/20210913_2_circle_30s" />
+        <param name="npz_name" value="datas_for_gp_y.npz" />
+        <param name="data_type" value="single" />
+        <param name="gp_limit" value="$(arg gp_mean_limit)" />
+    </node>
+
+    <!-- simulate setting p -->
+    <node name="offboard_mpc_controller" type="quadrotor_optimizer_q_mpc_q330_set_p.py" pkg="itm_nonlinear_mpc" output="screen">
+        <remap from="/real_pose" to="$(arg robot_loc_pose)" />
+        <param name="control_offset" value="$(arg offset)" />
+    </node>
+
+    <!-- export npy of control with and without p -->
+    <node name="offboard_export_control" type="export_mission_control_set_p.py" pkg="itm_nonlinear_mpc" output="screen">
+        <param name="npy_name" value="$(arg npy)" />
+        <param name="folder_name" value="$(arg experiment)" />   <!-- q330 or q300 or gazebo -->
+    </node>
+</launch>
