@@ -1,0 +1,3 @@
+[submodule "src/itm/itm_quadrotor_node/itm_nonlinear_mpc/scripts/gaussian_process"]
+	path = src/itm/itm_quadrotor_node/itm_nonlinear_mpc/scripts/gaussian_process
+	url = git@github.com:yinfenglong/gaussian_process.git
